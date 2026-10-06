@@ -5,7 +5,7 @@ both in the PESTILLENCE design system (black + one electric blue accent).
 
 | File | What it is |
 |---|---|
-| `index.html` | The landing page. Hero, shipping facts, 12 live tees linking to their real product pages, final call to action, and a small "see more" row. |
+| `index.html` | The landing page: a mini collection of 3 tees (Last Rites, Horned Madonna, Sainted Scream) with real store photos, price, sizes and a Buy now button to each product page, plus a 3-step "how to buy" and one "see more" link. |
 | `guide.html` | Plain-language guide: how the landing page connects to the store, how to set up every button in Wix Studio, the customer journey from ad to checkout, and tracking. |
 
 ## Before running ads
@@ -19,7 +19,7 @@ both in the PESTILLENCE design system (black + one electric blue accent).
 ## Add the landing page to Wix Studio
 1. Add a page, for example `/gothic-drop`.
 2. **Add Elements (+) → Embed code → Embed HTML**, choose **Code**, paste all of `index.html`.
-3. Stretch it to full width and set the height (about 4300px on desktop, 4600px on mobile).
+3. Stretch it to full width and set the height (about 3800px on desktop, 4900px on mobile).
 4. Publish.
 
 All links use `target="_top"`, so they open the real store page, not a page inside the embed.
@@ -43,4 +43,4 @@ Fonts (Google Fonts): **Anton** for headlines, **Space Mono** for body text and 
 **UnifrakturMaguntia** for the logo only. The guide uses **Archivo** for long body text.
 
 ## Updating products
-Edit the `products` array at the bottom of `index.html`: name, subtitle, product slug, Wix image ID.
+Edit the `relics` array at the bottom of `index.html`: name, type, product slug, Wix image ID and the two lines of text.
