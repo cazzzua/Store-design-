@@ -26,6 +26,8 @@
     --ease-in-out: cubic-bezier(.77, 0, .175, 1);
     --ease-enter: cubic-bezier(.16, 1, .3, 1);
     --gutter: clamp(16px, 4vw, 64px);
+    /* Logo wordmark font: change this one line to match the official site */
+    --logo-font: "UnifrakturMaguntia", serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -76,7 +78,7 @@
     padding: 14px var(--gutter); background: rgba(10,10,10,.82); backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--p-charcoal);
   }
-  .logo { font-family: "UnifrakturMaguntia", serif; font-size: 28px; line-height: 1; }
+  .logo { font-family: var(--logo-font); font-size: 28px; line-height: 1; }
 
   /* Hero: short, so the products show up fast */
   .hero {
@@ -144,9 +146,19 @@
   .info .desc { color: var(--p-text-dim); max-width: 44ch; margin-bottom: 24px; }
   .price { font-family: "Anton", sans-serif; font-size: 34px; letter-spacing: .03em; margin-bottom: 14px; }
   .price small { font-family: "Space Mono", monospace; font-size: 12px; letter-spacing: .1em; color: var(--p-text-dim); margin-left: 10px; text-transform: uppercase; }
-  .sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
-  .sizes em { flex-basis: 100%; font-style: normal; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--p-text-ghost); }
-  .sizes span { min-width: 42px; padding: 6px 8px; text-align: center; border: 1px solid var(--p-charcoal); font-size: 12px; color: var(--p-text-dim); }
+  .sizes { border: 0; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+  .sizes legend { width: 100%; margin-bottom: 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--p-text-dim); }
+  .sizes legend b { color: var(--p-text); font-weight: 400; }
+  .sizes input { position: absolute; opacity: 0; pointer-events: none; }
+  .sizes label {
+    display: grid; place-items: center; min-width: 48px; min-height: 44px; padding: 0 10px; cursor: pointer; user-select: none;
+    border: 1px solid var(--p-washed); font-size: 13px; color: var(--p-text);
+    transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease, transform 120ms var(--ease-out);
+  }
+  .sizes label:active { transform: scale(.95); }
+  .sizes input:checked + label { border-color: var(--p-neon); background: var(--p-neon-ghost); color: var(--p-neon); }
+  .sizes input:focus-visible + label { outline: 2px solid var(--p-neon); outline-offset: 2px; }
+  @media (hover: hover) and (pointer: fine) { .sizes label:hover { border-color: var(--p-text-dim); } }
   .buy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
   .buy .note { font-size: 12px; color: var(--p-text-ghost); }
   @media (max-width: 820px) { .buy .cta { width: 100%; } }
@@ -223,10 +235,10 @@
       <p class="hook reveal" style="--d:110ms">"Endings deserve ceremony. Most of the ones you&#39;ve had didn&#39;t get any."</p>
       <p class="desc reveal" style="--d:140ms">A hooded grim reaper with a bloodied skull under a pale halo. Printed into the cotton, so the halo doesn&#39;t yellow or lift at the edges.</p>
       <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
-      <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span><span>5XL</span></div>
+      <fieldset class="sizes reveal" style="--d:200ms" data-for="lr"><legend>Size: <b>choose one</b> · all in stock</legend><input type="radio" name="size-lr" id="lr-S" value="S"><label for="lr-S">S</label><input type="radio" name="size-lr" id="lr-M" value="M"><label for="lr-M">M</label><input type="radio" name="size-lr" id="lr-L" value="L"><label for="lr-L">L</label><input type="radio" name="size-lr" id="lr-XL" value="XL"><label for="lr-XL">XL</label><input type="radio" name="size-lr" id="lr-2XL" value="2XL"><label for="lr-2XL">2XL</label><input type="radio" name="size-lr" id="lr-3XL" value="3XL"><label for="lr-3XL">3XL</label><input type="radio" name="size-lr" id="lr-4XL" value="4XL"><label for="lr-4XL">4XL</label><input type="radio" name="size-lr" id="lr-5XL" value="5XL"><label for="lr-5XL">5XL</label></fieldset>
       <div class="buy reveal" style="--d:230ms">
-        <a class="cta" href="https://cazzzua.wixstudio.com/my-site-2/product-page/last-rites-hooded-reaper-tee" target="_top">Buy now · $35.90</a>
-        <span class="note">Choose your size on the next screen, then checkout.</span>
+        <a class="cta" id="buy-lr" href="https://cazzzua.wixstudio.com/my-site-2/product-page/last-rites-hooded-reaper-tee" target="_top">Buy now · $35.90</a>
+        <span class="note" id="note-lr">Pick a size above, or choose it on the next screen.</span>
       </div>
     </div>
   </article>
@@ -243,10 +255,10 @@
       <p class="hook reveal" style="--d:110ms">"Every mother in every painting is holding something. This one is holding a skull."</p>
       <p class="desc reveal" style="--d:140ms">A horned woman marked with a pentagram, a skull where the sacred heart usually goes. Fine line work that stays fine wash after wash.</p>
       <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
-      <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span><span>5XL</span></div>
+      <fieldset class="sizes reveal" style="--d:200ms" data-for="hm"><legend>Size: <b>choose one</b> · all in stock</legend><input type="radio" name="size-hm" id="hm-S" value="S"><label for="hm-S">S</label><input type="radio" name="size-hm" id="hm-M" value="M"><label for="hm-M">M</label><input type="radio" name="size-hm" id="hm-L" value="L"><label for="hm-L">L</label><input type="radio" name="size-hm" id="hm-XL" value="XL"><label for="hm-XL">XL</label><input type="radio" name="size-hm" id="hm-2XL" value="2XL"><label for="hm-2XL">2XL</label><input type="radio" name="size-hm" id="hm-3XL" value="3XL"><label for="hm-3XL">3XL</label><input type="radio" name="size-hm" id="hm-4XL" value="4XL"><label for="hm-4XL">4XL</label><input type="radio" name="size-hm" id="hm-5XL" value="5XL"><label for="hm-5XL">5XL</label></fieldset>
       <div class="buy reveal" style="--d:230ms">
-        <a class="cta" href="https://cazzzua.wixstudio.com/my-site-2/product-page/horned-madonna-pentagram-tee" target="_top">Buy now · $35.90</a>
-        <span class="note">Choose your size on the next screen, then checkout.</span>
+        <a class="cta" id="buy-hm" href="https://cazzzua.wixstudio.com/my-site-2/product-page/horned-madonna-pentagram-tee" target="_top">Buy now · $35.90</a>
+        <span class="note" id="note-hm">Pick a size above, or choose it on the next screen.</span>
       </div>
     </div>
   </article>
@@ -263,10 +275,10 @@
       <p class="hook reveal" style="--d:110ms">"Somebody always gets made an example of. Occasionally it&#39;s worth it."</p>
       <p class="desc reveal" style="--d:140ms">A screaming skull saint, haloed bone white on a bloodstained shroud. The open jaw sits dead centre, so it lands first.</p>
       <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
-      <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span><span>5XL</span></div>
+      <fieldset class="sizes reveal" style="--d:200ms" data-for="ss"><legend>Size: <b>choose one</b> · all in stock</legend><input type="radio" name="size-ss" id="ss-S" value="S"><label for="ss-S">S</label><input type="radio" name="size-ss" id="ss-M" value="M"><label for="ss-M">M</label><input type="radio" name="size-ss" id="ss-L" value="L"><label for="ss-L">L</label><input type="radio" name="size-ss" id="ss-XL" value="XL"><label for="ss-XL">XL</label><input type="radio" name="size-ss" id="ss-2XL" value="2XL"><label for="ss-2XL">2XL</label><input type="radio" name="size-ss" id="ss-3XL" value="3XL"><label for="ss-3XL">3XL</label><input type="radio" name="size-ss" id="ss-4XL" value="4XL"><label for="ss-4XL">4XL</label><input type="radio" name="size-ss" id="ss-5XL" value="5XL"><label for="ss-5XL">5XL</label></fieldset>
       <div class="buy reveal" style="--d:230ms">
-        <a class="cta" href="https://cazzzua.wixstudio.com/my-site-2/product-page/sainted-scream-martyr-tee" target="_top">Buy now · $35.90</a>
-        <span class="note">Choose your size on the next screen, then checkout.</span>
+        <a class="cta" id="buy-ss" href="https://cazzzua.wixstudio.com/my-site-2/product-page/sainted-scream-martyr-tee" target="_top">Buy now · $35.90</a>
+        <span class="note" id="note-ss">Pick a size above, or choose it on the next screen.</span>
       </div>
     </div>
   </article>
@@ -296,6 +308,20 @@
 </footer>
 
 <script>
+  // Size picker: the chosen size shows on the Buy button and the note
+  document.querySelectorAll(".sizes").forEach(set => {
+    const k = set.dataset.for;
+    const btn = document.getElementById("buy-" + k);
+    const note = document.getElementById("note-" + k);
+    const shown = set.querySelector("legend b");
+    set.addEventListener("change", e => {
+      const size = e.target.value;
+      shown.textContent = size;
+      btn.textContent = `Buy size ${size} · $35.90`;
+      note.textContent = `Tap ${size} again on the next screen, then Add to Cart.`;
+    });
+  });
+
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add("in");
