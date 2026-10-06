@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PESTILLENCE — Gothic Apparel</title>
+<meta name="description" content="PESTILLENCE — hand-drawn gothic, occult and macabre t-shirts. Reapers, horned saints and weeping skulls, printed to order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #0a0807;
+    --crypt: #14100e;
+    --ash: #2a2320;
+    --bone: #e9e1d3;
+    --bone-dim: #a89d8c;
+    --blood: #8b0d14;
+    --blood-hi: #c1121c;
+    --gold: #b8955a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void);
+    color: var(--bone);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 19px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* film grain over everything */
+  body::after {
+    content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 50;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    opacity: .07; animation: grain 1.2s steps(6) infinite;
+  }
+  @keyframes grain { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} 100%{transform:translate(1%,3%)} }
+
+  /* candlelight that follows the cursor */
+  .candle {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(420px circle at var(--x, 50%) var(--y, 30%), rgba(193, 120, 60, .10), transparent 70%);
+  }
+
+  .eyebrow {
+    font-family: "Cinzel", serif; font-size: 12px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: .7em;
+    font-family: "Cinzel", serif; font-weight: 700; font-size: 13px; letter-spacing: .25em; text-transform: uppercase;
+    padding: 18px 34px; border: 1px solid var(--blood-hi); background: var(--blood); color: var(--bone);
+    transition: background .25s, transform .25s, box-shadow .25s;
+  }
+  .btn:hover { background: var(--blood-hi); transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(193,18,28,.7); }
+  .btn.ghost { background: transparent; border-color: var(--bone-dim); }
+  .btn.ghost:hover { border-color: var(--bone); background: rgba(233,225,211,.06); box-shadow: none; }
+
+  /* ---------- top bar ---------- */
+  .omen {
+    position: relative; z-index: 5; text-align: center; padding: 10px 16px;
+    background: var(--blood); font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between;
+    padding: 18px clamp(16px, 4vw, 56px); background: rgba(10,8,7,.82); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(184,149,90,.18);
+  }
+  .logo { font-family: "UnifrakturCook", serif; font-size: 30px; letter-spacing: .02em; }
+  .logo span { color: var(--blood-hi); }
+  nav ul { display: flex; gap: 32px; list-style: none; font-family: "Cinzel", serif; font-size: 12px; letter-spacing: .25em; text-transform: uppercase; }
+  nav ul a { color: var(--bone-dim); transition: color .2s; }
+  nav ul a:hover { color: var(--bone); }
+  @media (max-width: 760px) { nav ul { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; z-index: 2; min-height: calc(100vh - 110px);
+    display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(24px, 5vw, 80px);
+    padding: clamp(40px, 7vw, 100px) clamp(16px, 5vw, 80px);
+    background:
+      radial-gradient(ellipse at 75% 40%, rgba(139,13,20,.28), transparent 60%),
+      radial-gradient(ellipse at 10% 100%, rgba(184,149,90,.08), transparent 55%);
+  }
+  .hero h1 {
+    font-family: "UnifrakturCook", serif; font-weight: 700; line-height: .92;
+    font-size: clamp(64px, 11vw, 168px); margin: 18px 0 10px; letter-spacing: -.01em;
+    text-shadow: 0 0 60px rgba(193,18,28,.35);
+  }
+  .hero h1 .drip { color: var(--blood-hi); display: inline-block; animation: drip 4s ease-in-out infinite; }
+  @keyframes drip { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+  .hero .tag { font-size: clamp(22px, 2.4vw, 30px); font-style: italic; color: var(--bone-dim); max-width: 30ch; margin-bottom: 36px; }
+  .hero .ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-art { position: relative; justify-self: center; width: min(460px, 100%); }
+  .hero-art .frame {
+    position: relative; aspect-ratio: 4/5; overflow: hidden;
+    border: 1px solid rgba(184,149,90,.45); outline: 1px solid rgba(184,149,90,.2); outline-offset: 10px;
+    border-radius: 230px 230px 4px 4px; /* gothic arch */
+    background: var(--crypt);
+    box-shadow: 0 40px 120px -30px rgba(139,13,20,.6);
+  }
+  .hero-art img { width: 100%; height: 100%; object-fit: cover; transition: opacity 1.2s ease; }
+  .hero-art .frame img + img { position: absolute; inset: 0; opacity: 0; }
+  .hero-art .caption {
+    position: absolute; left: 50%; bottom: -22px; transform: translateX(-50%); white-space: nowrap;
+    background: var(--void); padding: 8px 18px; border: 1px solid rgba(184,149,90,.4);
+    font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold);
+  }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; }
+    .hero .tag { margin-inline: auto; }
+    .hero .ctas { justify-content: center; }
+    .hero-art { width: min(340px, 86vw); margin-top: 20px; }
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee { position: relative; z-index: 2; overflow: hidden; border-block: 1px solid rgba(184,149,90,.25); background: var(--crypt); padding: 16px 0; }
+  .marquee .track { display: flex; width: max-content; animation: scroll 38s linear infinite; }
+  .marquee span { font-family: "Cinzel", serif; font-size: 14px; letter-spacing: .4em; text-transform: uppercase; color: var(--bone-dim); padding-right: 2.2em; white-space: nowrap; }
+  .marquee span b { color: var(--blood-hi); font-weight: 400; padding-left: 2.2em; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* ---------- section shell ---------- */
+  section { position: relative; z-index: 2; padding: clamp(70px, 10vw, 140px) clamp(16px, 5vw, 80px); }
+  .head { text-align: center; max-width: 720px; margin: 0 auto clamp(40px, 6vw, 72px); }
+  .head h2 { font-family: "UnifrakturCook", serif; font-size: clamp(44px, 6vw, 80px); line-height: 1; margin: 14px 0 16px; }
+  .head p { color: var(--bone-dim); font-size: 21px; font-style: italic; }
+  .divider { display: flex; align-items: center; justify-content: center; gap: 14px; color: var(--gold); margin-top: 18px; }
+  .divider::before, .divider::after { content: ""; width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .divider::after { transform: scaleX(-1); }
+
+  /* ---------- reliquary (products) ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: clamp(18px, 2.4vw, 32px); max-width: 1320px; margin: 0 auto; }
+  .card { position: relative; display: block; background: var(--crypt); border: 1px solid rgba(184,149,90,.14); transition: border-color .35s, transform .35s; }
+  .card:hover { border-color: rgba(193,18,28,.7); transform: translateY(-6px); }
+  .card .img { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #1b1513; }
+  .card img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05); transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .5s; }
+  .card:hover img { transform: scale(1.06); filter: saturate(1) contrast(1.1); }
+  .card .img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,8,7,.85), transparent 45%); }
+  .card .no { position: absolute; top: 14px; left: 16px; z-index: 2; font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; color: var(--gold); }
+  .card .view {
+    position: absolute; left: 50%; bottom: 18px; z-index: 2; transform: translate(-50%, 12px); opacity: 0;
+    font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+    padding: 10px 18px; background: var(--blood); white-space: nowrap; transition: opacity .3s, transform .3s;
+  }
+  .card:hover .view, .card:focus-visible .view { opacity: 1; transform: translate(-50%, 0); }
+  .card .meta { padding: 18px 18px 22px; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .card h3 { font-family: "Cinzel", serif; font-weight: 700; font-size: 16px; letter-spacing: .08em; text-transform: uppercase; }
+  .card .sub { display: block; font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 16px; color: var(--bone-dim); margin-top: 2px; }
+  .card .price { font-family: "Cinzel", serif; color: var(--gold); font-size: 15px; white-space: nowrap; }
+  .more { text-align: center; margin-top: 56px; }
+
+  /* ---------- manifesto ---------- */
+  .manifesto {
+    background:
+      linear-gradient(rgba(10,8,7,.86), rgba(10,8,7,.94)),
+      url("https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_70,blur_3/bg.jpg") center/cover fixed;
+    text-align: center;
+  }
+  .manifesto blockquote { max-width: 900px; margin: 0 auto; font-size: clamp(28px, 3.6vw, 48px); line-height: 1.25; font-style: italic; }
+  .manifesto blockquote em { color: var(--blood-hi); font-style: normal; font-family: "UnifrakturCook", serif; }
+  .manifesto .sig { margin-top: 32px; }
+
+  /* ---------- rites (why) ---------- */
+  .rites { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; background: rgba(184,149,90,.18); border: 1px solid rgba(184,149,90,.18); }
+  .rite { background: var(--void); padding: 44px 30px; text-align: center; }
+  .rite .sym { font-size: 34px; color: var(--blood-hi); line-height: 1; margin-bottom: 18px; }
+  .rite h4 { font-family: "Cinzel", serif; font-size: 15px; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 10px; }
+  .rite p { color: var(--bone-dim); font-size: 18px; }
+
+  /* ---------- final call ---------- */
+  .summon { text-align: center; background: radial-gradient(ellipse at center, rgba(139,13,20,.35), transparent 70%); }
+  .summon h2 { font-family: "UnifrakturCook", serif; font-size: clamp(52px, 8vw, 110px); line-height: 1; margin: 16px 0 22px; }
+  .summon p { color: var(--bone-dim); font-size: 22px; font-style: italic; margin-bottom: 38px; }
+
+  footer { position: relative; z-index: 2; border-top: 1px solid rgba(184,149,90,.18); padding: 40px clamp(16px, 5vw, 80px); display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; color: var(--bone-dim); font-size: 15px; }
+  footer .logo { font-size: 24px; color: var(--bone); }
+
+  /* reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+    .manifesto { background-attachment: scroll; }
+  }
+</style>
+</head>
+<body>
+<div class="candle" aria-hidden="true"></div>
+
+<div class="omen">Hand-drawn gothic apparel · Printed to order · Ships worldwide</div>
+
+<nav>
+  <a class="logo" href="https://cazzzua.wixstudio.com/my-site-2" target="_top">Pestil<span>l</span>ence</a>
+  <ul>
+    <li><a href="#reliquary">The Reliquary</a></li>
+    <li><a href="#creed">The Creed</a></li>
+    <li><a href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">Shop all</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="reveal">
+    <div class="eyebrow">Gothic · Occult · Macabre</div>
+    <h1>Wear the<br><span class="drip">Omen.</span></h1>
+    <p class="tag">Reapers, horned saints and weeping skulls — raw, hand-drawn art for those who never dressed for the light.</p>
+    <div class="ctas">
+      <a class="btn" href="#reliquary">Enter the Reliquary ✝</a>
+      <a class="btn ghost" href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">Shop all tees</a>
+    </div>
+  </div>
+  <div class="hero-art reveal" aria-hidden="true">
+    <div class="frame" id="heroFrame">
+      <img src="https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg/v1/fill/w_920,h_1150,al_c,q_85/last-rites.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg/v1/fill/w_920,h_1150,al_c,q_85/horned-madonna.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg/v1/fill/w_920,h_1150,al_c,q_85/sainted-scream.jpg" alt="">
+    </div>
+    <div class="caption" id="heroCaption">Nº III — Last Rites</div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Last Rites<b>✝</b></span><span>Horned Madonna<b>✝</b></span><span>Crimson Halo<b>✝</b></span><span>Pale Moon<b>✝</b></span><span>Sainted Scream<b>✝</b></span><span>Mouth of Blood<b>✝</b></span><span>Open Ribs<b>✝</b></span><span>The Ring<b>✝</b></span>
+    <span>Last Rites<b>✝</b></span><span>Horned Madonna<b>✝</b></span><span>Crimson Halo<b>✝</b></span><span>Pale Moon<b>✝</b></span><span>Sainted Scream<b>✝</b></span><span>Mouth of Blood<b>✝</b></span><span>Open Ribs<b>✝</b></span><span>The Ring<b>✝</b></span>
+  </div>
+</div>
+
+<section id="reliquary">
+  <div class="head reveal">
+    <div class="eyebrow">The collection</div>
+    <h2>The Reliquary</h2>
+    <p>Twelve relics. Each one drawn by hand, edges left exactly where they landed.</p>
+    <div class="divider">✝</div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="more reveal"><a class="btn ghost" href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">See the full collection</a></div>
+</section>
+
+<section class="manifesto" id="creed">
+  <div class="eyebrow reveal">The Creed</div>
+  <blockquote class="reveal" style="margin-top:24px">
+    “Not everything worth wearing was drawn neatly. We make shirts for the ones who find <em>beauty</em> in the ruin — the funeral, the relic, the saint with blood on the halo.”
+  </blockquote>
+  <div class="sig eyebrow reveal">— Pestillence</div>
+</section>
+
+<section>
+  <div class="head reveal">
+    <div class="eyebrow">Why Pestillence</div>
+    <h2>The Rites</h2>
+  </div>
+  <div class="rites reveal">
+    <div class="rite"><div class="sym">☠</div><h4>Hand-drawn art</h4><p>Raw, painted originals — not clip-art skulls off a stock site.</p></div>
+    <div class="rite"><div class="sym">✝</div><h4>Printed to order</h4><p>Each tee is made when you order it. No overstock, no waste.</p></div>
+    <div class="rite"><div class="sym">⛧</div><h4>Ships worldwide</h4><p>To the USA, UK, Canada, Europe and beyond.</p></div>
+    <div class="rite"><div class="sym">🕯</div><h4>Secure checkout</h4><p>Pay safely through our official store.</p></div>
+  </div>
+</section>
+
+<section class="summon">
+  <div class="eyebrow reveal">The night is calling</div>
+  <h2 class="reveal">Choose your relic.</h2>
+  <p class="reveal">Twelve designs. One will feel like it was drawn for you.</p>
+  <a class="btn reveal" href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">Shop Pestillence ✝</a>
+</section>
+
+<footer>
+  <a class="logo" href="https://cazzzua.wixstudio.com/my-site-2" target="_top">Pestillence</a>
+  <span>© <span id="yr"></span> Pestillence · Gothic apparel for the unholy few</span>
+</footer>
+
+<script>
+  // Live catalog (from the Wix store, Oct 2026). Edit here when products change.
+  const STORE = "https://cazzzua.wixstudio.com/my-site-2/product-page/";
+  const IMG = id => `https://static.wixstatic.com/media/940240_${id}~mv2.jpg/v1/fill/w_640,h_800,al_c,q_85/tee.jpg`;
+  const products = [
+    ["Last Rites", "Hooded Reaper", "last-rites-hooded-reaper-tee", "aa888750d9aa409eb18fed5eed304de1"],
+    ["Horned Madonna", "Pentagram", "horned-madonna-pentagram-tee", "72b7a03c32444ef18b9aebfc0cbad304"],
+    ["Crimson Halo", "Grim Reaper", "crimson-halo-reaper-tee", "932e62d478d5469f8dbf461e81d9b7c1"],
+    ["Sainted Scream", "Horror Martyr", "sainted-scream-martyr-tee", "2057e837b4584c12a2ba7d3b6f1be052"],
+    ["Pale Moon", "Weeping Skull", "pale-moon-weeping-skull-tee", "ff85ead2735241f4bb86115c0d47f3d9"],
+    ["Horned Siren", "Satanic Pentacle", "horned-siren-pentacle-tee", "cfb69ccf411b495793d5e86f05dde5da"],
+    ["Red Eyes", "Veiled Skull", "red-eyes-veiled-skull-tee", "d416905c971341f9a4dac4e94164197f"],
+    ["Mouth of Blood", "Horror Skull", "mouth-of-blood-hooded-skull-tee", "c4c0462497804df68e2a88d6f41a7395"],
+    ["Open Ribs", "Skeleton Saint", "open-ribs-skeletal-saint-tee", "8f037de8eeb24ac59ac085f83a7b3b85"],
+    ["Bone Halo", "Gothic Skull", "bone-halo-weeping-saint-tee", "3a102c45b2be4d61b8e438f1f0d7da43"],
+    ["The Ring", "Faceless Occult", "the-ring-faceless-tee", "cb2d524cf9f5401cbd568aeb0eb3bb2e"],
+    ["Framed", "Occult Sigil", "framed-occult-sigil-tee", "ccd06c8e56c24927881ebe37dd0383cc"],
+  ];
+  const roman = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
+  document.getElementById("grid").innerHTML = products.map(([name, sub, slug, img], i) => `
+    <a class="card reveal" href="${STORE + slug}" target="_top" style="transition-delay:${(i % 4) * 80}ms">
+      <div class="img">
+        <span class="no">Nº ${roman[i]}</span>
+        <img src="${IMG(img)}" alt="${name} — ${sub} gothic t-shirt" loading="lazy">
+        <span class="view">View relic →</span>
+      </div>
+      <div class="meta">
+        <h3>${name}<span class="sub">${sub} tee</span></h3>
+        <span class="price">$35.90</span>
+      </div>
+    </a>`).join("");
+
+  // Hero crossfade between three relics
+  const frames = document.querySelectorAll("#heroFrame img");
+  const caps = ["Nº III — Last Rites", "Nº II — Horned Madonna", "Nº IV — Sainted Scream"];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur = 0;
+  if (!reduce) setInterval(() => {
+    frames[cur].style.opacity = 0;
+    cur = (cur + 1) % frames.length;
+    frames[cur].style.opacity = 1;
+    document.getElementById("heroCaption").textContent = caps[cur];
+  }, 4200);
+  frames[0].style.opacity = 1;
+
+  // Candlelight follows the cursor
+  const candle = document.querySelector(".candle");
+  addEventListener("pointermove", e => {
+    candle.style.setProperty("--x", e.clientX + "px");
+    candle.style.setProperty("--y", e.clientY + "px");
+  }, { passive: true });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
