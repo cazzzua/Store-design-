@@ -1,49 +1,46 @@
 # PESTILLENCE — Landing Page
 
-A single-file gothic landing page (`index.html`) for the PESTILLENCE Wix store
-(https://cazzzua.wixstudio.com/my-site-2). It features the 12 live tees from the
-Wix Stores catalog, each linking to its real product page.
+Two pages for the PESTILLENCE Wix store (https://cazzzua.wixstudio.com/my-site-2),
+both in the PESTILLENCE design system (black + one electric blue accent).
 
-## Sections
-1. Announcement bar
-2. Hero ("Wear the Omen.") with a gothic-arch frame that crossfades between three designs
-3. Scrolling marquee of design names
-4. **The Reliquary** — product grid (numbered Nº I–XII, hover zoom and "View relic")
-5. **The Creed** — brand manifesto over a blurred artwork background
-6. **The Rites** — four reasons to buy
-7. Final call-to-action and footer
+| File | What it is |
+|---|---|
+| `index.html` | The landing page. Hero, shipping facts, 12 live tees linking to their real product pages, final call to action, and a small "see more" row. |
+| `guide.html` | Plain-language guide: how the landing page connects to the store, how to set up every button in Wix Studio, the customer journey from ad to checkout, and tracking. |
 
-Effects: film grain, cursor "candlelight" glow, scroll reveals. All motion switches off
-for visitors who set "reduce motion" on their device.
+## Before running ads
+- The site is on the Wix **Free plan**. Wix needs a paid plan with eCommerce to take payments.
+- `index.html` runs inside an HTML embed, which can't add items to the Wix cart. Its buttons open the
+  real product pages. For "Add to Cart" directly on the landing page, use Wix Stores elements
+  (see `guide.html`, section 2b, Option 1).
+- Collection links use `/category/all-products`, `/category/t-shirts` and `/category/hoodies`.
+  Open each once to confirm. They're set in one place: the `LINKS` object at the bottom of `index.html`.
 
-## Add it to Wix Studio
-1. Open the site in the Wix Studio editor.
-2. Add a page (e.g. `/gothic`), or use the homepage.
-3. **Add (+) → Embed → Embed HTML** (custom code), set to **Code**, and paste all of `index.html`.
-4. Stretch the element to full width and make it tall enough (about 5200px on desktop).
-   Check the mobile breakpoint and set its height there too.
-5. Publish.
+## Add the landing page to Wix Studio
+1. Add a page, for example `/gothic-drop`.
+2. **Add Elements (+) → Embed code → Embed HTML**, choose **Code**, paste all of `index.html`.
+3. Stretch it to full width and set the height (about 4300px on desktop, 4600px on mobile).
+4. Publish.
 
-All links use `target="_top"`, so clicking a product opens the real store page, not
-a page inside the embed.
+All links use `target="_top"`, so they open the real store page, not a page inside the embed.
 
-**SEO note:** Google does not credit text inside an HTML embed to your page. If you
-want this page to rank, rebuild the sections with native Wix Studio elements and use
-this file as the design reference (colours, fonts and copy below).
+**SEO note:** Google doesn't credit text inside an HTML embed to your page. For a page that should
+rank, rebuild the sections with native Wix Studio elements using the tokens below.
 
-## Design tokens
+## Design tokens (PESTILENCE design system)
 | Token | Hex | Use |
 |---|---|---|
-| Void | `#0a0807` | Page background |
-| Crypt | `#14100e` | Cards and panels |
-| Bone | `#e9e1d3` | Main text |
-| Bone dim | `#a89d8c` | Secondary text |
-| Blood | `#8b0d14` / `#c1121c` | Buttons and accents |
-| Gold | `#b8955a` | Small labels and lines |
+| `--p-black` | `#0a0a0a` | Page background |
+| `--p-near-black` | `#101014` | Cards |
+| `--p-charcoal` | `#1a1a1f` | Borders, dividers |
+| `--p-washed` | `#232328` | Image placeholders, hover borders |
+| `--p-neon` | `#0080FF` | The only accent: main buttons and one hero glow (keep under ~5% of the screen) |
+| `--p-text` | `#e8e8ea` | Main text |
+| `--p-text-dim` | `#8a8a92` | Secondary text, labels |
+| `--p-text-ghost` | `#4a4a52` | Outlined display words |
 
-Fonts (Google Fonts): **UnifrakturCook** (headlines), **Cinzel** (labels and buttons),
-**Cormorant Garamond** (body text).
+Fonts (Google Fonts): **Anton** for headlines, **Space Mono** for body text and labels,
+**UnifrakturMaguntia** for the logo only. The guide uses **Archivo** for long body text.
 
 ## Updating products
-Edit the `products` array at the bottom of `index.html`. Each row holds the name,
-subtitle, product slug and Wix image ID.
+Edit the `products` array at the bottom of `index.html`: name, subtitle, product slug, Wix image ID.

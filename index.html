@@ -3,391 +3,368 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PESTILLENCE — Gothic Apparel</title>
-<meta name="description" content="PESTILLENCE — hand-drawn gothic, occult and macabre t-shirts. Reapers, horned saints and weeping skulls, printed to order.">
+<title>PESTILLENCE — Gothic Drop</title>
+<meta name="description" content="PESTILLENCE gothic and occult tees. Hand-drawn reapers, horned saints and skulls, DTG printed on heavyweight black cotton. Free worldwide shipping, unisex S to 5XL.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <style>
+  /* PESTILENCE design tokens */
   :root {
-    --void: #0a0807;
-    --crypt: #14100e;
-    --ash: #2a2320;
-    --bone: #e9e1d3;
-    --bone-dim: #a89d8c;
-    --blood: #8b0d14;
-    --blood-hi: #c1121c;
-    --gold: #b8955a;
+    --p-black: #0a0a0a;
+    --p-near-black: #101014;
+    --p-charcoal: #1a1a1f;
+    --p-washed: #232328;
+    --p-neon: #0080FF;
+    --p-neon-dim: #0080FF66;
+    --p-neon-ghost: #0080FF14;
+    --p-text: #e8e8ea;
+    --p-text-dim: #8a8a92;
+    --p-text-ghost: #4a4a52;
     /* motion */
     --ease-out: cubic-bezier(.23, 1, .32, 1);
     --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+    --ease-enter: cubic-bezier(.16, 1, .3, 1);
+    --gutter: clamp(16px, 4vw, 64px);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--void);
-    color: var(--bone);
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 19px;
-    line-height: 1.55;
+    background: var(--p-black);
+    color: var(--p-text);
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 15px;
+    line-height: 1.65;
     overflow-x: hidden;
   }
   a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
-  img { display: block; max-width: 100%; }
+  img { display: block; max-width: 100%; color: transparent; } /* hide alt text if an image fails */
 
-  /* film grain over everything */
+  /* Atmosphere: grain + scanlines */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .05;
+  }
   body::after {
-    content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 50;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-    opacity: .07; animation: grain 1.2s steps(6) infinite;
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 59;
+    background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(255,255,255,.012) 3px 4px);
   }
-  @keyframes grain { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} 100%{transform:translate(1%,3%)} }
 
-  /* candlelight that follows the cursor */
-  .candle {
-    position: fixed; left: -420px; top: -420px; width: 840px; height: 840px; pointer-events: none; z-index: 1;
-    background: radial-gradient(circle, rgba(193, 120, 60, .11), transparent 60%);
-    opacity: 0; transition: opacity 600ms ease; will-change: transform;
+  .label {
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--p-text-dim);
   }
-  .candle.lit { opacity: 1; }
+  .label::before { content: "— "; }
 
-  .eyebrow {
-    font-family: "Cinzel", serif; font-size: 12px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold);
-  }
-  .btn {
-    display: inline-flex; align-items: center; gap: .7em;
-    font-family: "Cinzel", serif; font-weight: 700; font-size: 13px; letter-spacing: .25em; text-transform: uppercase;
-    padding: 18px 34px; border: 1px solid var(--blood-hi); background: var(--blood); color: var(--bone);
-    transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 160ms var(--ease-out);
+  /* CTA */
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: .8em; min-height: 52px;
+    padding: .95rem 2.2rem; border: 1px solid var(--p-neon); color: var(--p-neon); background: transparent;
+    font: 700 13px/1 "Space Mono", monospace; letter-spacing: .14em; text-transform: uppercase;
+    transition: background-color 200ms ease, color 200ms ease, box-shadow 250ms ease, transform 160ms var(--ease-out);
     user-select: none;
   }
-  .btn:active { transform: scale(.97); }
-  .btn.ghost { background: transparent; border-color: var(--bone-dim); }
+  .cta:active { transform: scale(.97); }
+  .link {
+    display: inline-flex; align-items: center; min-height: 44px; gap: .5em;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--p-text-dim);
+    border-bottom: 1px solid var(--p-charcoal); transition: color 200ms ease, border-color 200ms ease;
+  }
   @media (hover: hover) and (pointer: fine) {
-    .btn:hover { background: var(--blood-hi); box-shadow: 0 10px 40px -12px rgba(193,18,28,.75); }
-    .btn.ghost:hover { border-color: var(--bone); background: rgba(233,225,211,.06); box-shadow: none; }
+    .cta:hover { background: var(--p-neon); color: var(--p-black); box-shadow: 0 0 30px var(--p-neon-dim); transform: translateY(-1px); }
+    .cta:hover:active { transform: scale(.97); }
+    .link:hover { color: var(--p-text); border-color: var(--p-text-dim); }
   }
 
-  /* ---------- top bar ---------- */
-  .omen {
-    position: relative; z-index: 5; text-align: center; padding: 10px 16px;
-    background: var(--blood); font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
-  }
-  nav {
-    position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between;
-    padding: 18px clamp(16px, 4vw, 56px); background: rgba(10,8,7,.82); backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(184,149,90,.18);
-  }
-  .logo { font-family: "UnifrakturCook", serif; font-size: 30px; letter-spacing: .02em; }
-  .logo span { color: var(--blood-hi); }
-  nav ul { display: flex; gap: 32px; list-style: none; font-family: "Cinzel", serif; font-size: 12px; letter-spacing: .25em; text-transform: uppercase; }
-  nav ul a { color: var(--bone-dim); transition: color 200ms ease; }
-  @media (hover: hover) and (pointer: fine) { nav ul a:hover { color: var(--bone); } }
-  @media (max-width: 760px) { nav ul { display: none; } }
+  /* Shipping strip (marquee) */
+  .strip { overflow: hidden; border-bottom: 1px solid var(--p-charcoal); background: var(--p-near-black); }
+  .strip .track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+  .strip span { padding: 10px 0; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--p-text-dim); white-space: nowrap; }
+  .strip span::after { content: "✕"; color: var(--p-text-ghost); padding: 0 2.4em; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
 
-  /* ---------- hero ---------- */
+  /* Header: logo + one quiet exit link */
+  header.top {
+    position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center;
+    padding: 14px var(--gutter); background: rgba(10,10,10,.8); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--p-charcoal);
+  }
+  .logo { font-family: "UnifrakturMaguntia", serif; font-size: 28px; line-height: 1; color: var(--p-text); }
+
+  /* Hero */
   .hero {
-    position: relative; z-index: 2; min-height: calc(100vh - 110px);
-    display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(24px, 5vw, 80px);
-    padding: clamp(40px, 7vw, 100px) clamp(16px, 5vw, 80px);
+    position: relative; overflow: hidden;
+    padding: clamp(48px, 8vw, 110px) var(--gutter) clamp(64px, 9vw, 130px);
     background:
-      radial-gradient(ellipse at 75% 40%, rgba(139,13,20,.28), transparent 60%),
-      radial-gradient(ellipse at 10% 100%, rgba(184,149,90,.08), transparent 55%);
+      radial-gradient(60% 70% at 78% 45%, rgba(0,128,255,.07), transparent 70%),
+      radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(0,0,0,.75) 100%),
+      linear-gradient(100deg, #0d0d11 0%, var(--p-black) 55%);
   }
+  .hero .grid-lines {
+    position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background-image: linear-gradient(var(--p-charcoal) 1px, transparent 1px), linear-gradient(90deg, var(--p-charcoal) 1px, transparent 1px);
+    background-size: 96px 96px;
+    mask-image: radial-gradient(70% 70% at 70% 50%, #000 0%, transparent 75%);
+  }
+  .hero-inner { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(24px, 4vw, 64px); align-items: end; max-width: 1400px; margin: 0 auto; }
   .hero h1 {
-    font-family: "UnifrakturCook", serif; font-weight: 700; line-height: .92;
-    font-size: clamp(64px, 11vw, 168px); margin: 18px 0 10px; letter-spacing: -.01em;
-    text-shadow: 0 0 60px rgba(193,18,28,.35);
+    font-family: "Anton", Impact, sans-serif; font-weight: 400; text-transform: uppercase;
+    font-size: clamp(4rem, 13vw, 12rem); line-height: .86; letter-spacing: .01em;
+    margin: 22px 0 28px; white-space: nowrap; position: relative; z-index: 2;
+    margin-right: -22vw; /* oversized type runs under the product shot */
   }
-  .hero h1 .drip { color: var(--blood-hi); display: inline-block; animation: drip 4s ease-in-out infinite; }
-  @keyframes drip { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-  .hero .tag { font-size: clamp(22px, 2.4vw, 30px); font-style: italic; color: var(--bone-dim); max-width: 30ch; margin-bottom: 36px; }
-  .hero .ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-  .hero-art { position: relative; justify-self: center; width: min(460px, 100%); }
-  .hero-art .frame {
-    position: relative; aspect-ratio: 4/5; overflow: hidden;
-    border: 1px solid rgba(184,149,90,.45); outline: 1px solid rgba(184,149,90,.2); outline-offset: 10px;
-    border-radius: 230px 230px 4px 4px; /* gothic arch */
-    background: var(--crypt);
-    box-shadow: 0 40px 120px -30px rgba(139,13,20,.6);
+  .hero h1 .ghost { color: transparent; -webkit-text-stroke: 1px var(--p-text-ghost); }
+  .hero p.lede { max-width: 42ch; color: var(--p-text-dim); margin-bottom: 34px; }
+  .hero .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
+  .hero-shot { position: relative; z-index: 3; justify-self: end; width: min(440px, 100%); }
+  .hero-shot .card {
+    position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--p-near-black);
+    border: 1px solid var(--p-neon-dim);
+    box-shadow: 0 0 40px var(--p-neon-dim), 0 40px 100px -30px #000; /* the one dominant glow */
     clip-path: inset(100% 0 0 0);
-    transition: clip-path 1200ms var(--ease-in-out) 250ms;
+    transition: clip-path 1100ms var(--ease-in-out) 200ms;
   }
-  .hero-art.in .frame { clip-path: inset(0 0 0 0); }
-  .hero-art img {
+  .hero-shot.in .card { clip-path: inset(0 0 0 0); }
+  .hero-shot img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
     opacity: 0; filter: blur(6px); transform: scale(1.04);
-    transition: opacity 1100ms var(--ease-in-out), filter 1100ms var(--ease-in-out), transform 1600ms var(--ease-out);
+    transition: opacity 1000ms var(--ease-in-out), filter 1000ms var(--ease-in-out), transform 1500ms var(--ease-out);
   }
-  .hero-art img.on { opacity: 1; filter: blur(0); transform: scale(1); }
-  .hero-art .caption span { display: inline-block; transition: opacity 300ms ease, filter 300ms ease; }
-  .hero-art .caption span.swap { opacity: 0; filter: blur(3px); }
-  .hero-art .caption {
-    position: absolute; left: 50%; bottom: -22px; transform: translateX(-50%); white-space: nowrap;
-    background: var(--void); padding: 8px 18px; border: 1px solid rgba(184,149,90,.4);
-    font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold);
+  .hero-shot img.on { opacity: 1; filter: blur(0); transform: scale(1); }
+  .hero-shot .tag {
+    display: flex; justify-content: space-between; margin-top: 12px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--p-text-dim);
   }
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; }
-    .hero .tag { margin-inline: auto; }
-    .hero .ctas { justify-content: center; }
-    .hero-art { width: min(340px, 86vw); margin-top: 20px; }
+  .hero-shot .tag b { color: var(--p-text); font-weight: 400; transition: opacity 250ms ease, filter 250ms ease; }
+  .hero-shot .tag b.swap { opacity: 0; filter: blur(3px); }
+  @media (max-width: 880px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero h1 { white-space: normal; margin-right: 0; font-size: clamp(3.6rem, 19vw, 7rem); }
+    .hero-shot { justify-self: start; width: min(360px, 100%); }
   }
 
-  /* ---------- marquee ---------- */
-  .marquee { position: relative; z-index: 2; overflow: hidden; border-block: 1px solid rgba(184,149,90,.25); background: var(--crypt); padding: 16px 0; }
-  .marquee .track { display: flex; width: max-content; animation: scroll 38s linear infinite; }
-  .marquee span { font-family: "Cinzel", serif; font-size: 14px; letter-spacing: .4em; text-transform: uppercase; color: var(--bone-dim); padding-right: 2.2em; white-space: nowrap; }
-  .marquee span b { color: var(--blood-hi); font-weight: 400; padding-left: 2.2em; }
-  @keyframes scroll { to { transform: translateX(-50%); } }
+  /* Facts row */
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--p-charcoal); }
+  .fact { padding: 26px var(--gutter); border-right: 1px solid var(--p-charcoal); }
+  .fact:last-child { border-right: 0; }
+  .fact b { display: block; font-family: "Anton", sans-serif; font-weight: 400; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
+  .fact span { color: var(--p-text-dim); font-size: 13px; }
+  @media (max-width: 880px) { .facts { grid-template-columns: 1fr 1fr; } .fact:nth-child(2) { border-right: 0; } .fact:nth-child(-n+2) { border-bottom: 1px solid var(--p-charcoal); } }
 
-  /* ---------- section shell ---------- */
-  section { position: relative; z-index: 2; padding: clamp(70px, 10vw, 140px) clamp(16px, 5vw, 80px); }
-  .head { text-align: center; max-width: 720px; margin: 0 auto clamp(40px, 6vw, 72px); }
-  .head h2 { font-family: "UnifrakturCook", serif; font-size: clamp(44px, 6vw, 80px); line-height: 1; margin: 14px 0 16px; }
-  .head p { color: var(--bone-dim); font-size: 21px; font-style: italic; }
-  .divider { display: flex; align-items: center; justify-content: center; gap: 14px; color: var(--gold); margin-top: 18px; }
-  .divider::before, .divider::after { content: ""; width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
-  .divider::after { transform: scaleX(-1); }
+  /* Section shell */
+  section { padding: clamp(72px, 10vw, 140px) var(--gutter); }
+  .sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px; max-width: 1400px; margin: 0 auto clamp(32px, 5vw, 56px); }
+  .sec-head h2 { font-family: "Anton", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(2.8rem, 7vw, 5.5rem); line-height: .9; letter-spacing: .02em; margin-top: 12px; }
+  .sec-head p { max-width: 38ch; color: var(--p-text-dim); }
 
-  /* ---------- reliquary (products) ---------- */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: clamp(18px, 2.4vw, 32px); max-width: 1320px; margin: 0 auto; }
-  .card { position: relative; display: block; background: var(--crypt); border: 1px solid rgba(184,149,90,.14); transition: border-color 250ms ease, transform 250ms var(--ease-out); }
-  .card:active { transform: scale(.98); transition-duration: 120ms; }
-  .card .img { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #1b1513; }
-  .card img {
-    width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05);
+  /* Product grid: asymmetric, first relic is featured */
+  .drop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .drop .item:first-child { grid-column: span 2; grid-row: span 2; }
+  @media (max-width: 1000px) { .drop { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px)  { .drop { gap: 10px; } .drop .item:first-child { grid-row: span 1; } }
+  .item {
+    position: relative; display: flex; flex-direction: column; background: var(--p-near-black); border: 1px solid var(--p-charcoal);
+    transition: border-color 250ms ease, transform 250ms var(--ease-out);
+  }
+  .item:active { transform: scale(.98); transition-duration: 120ms; }
+  .item .img { position: relative; flex: 1; min-height: 0; aspect-ratio: 4/5; overflow: hidden; background: var(--p-washed); }
+  .item:first-child .img { aspect-ratio: auto; }
+  .item img {
+    width: 100%; height: 100%; object-fit: cover;
     clip-path: inset(0 0 100% 0);
-    transition: clip-path 900ms var(--ease-in-out), transform 500ms var(--ease-out), filter 300ms ease;
+    transition: clip-path 900ms var(--ease-in-out) calc(var(--d, 0ms) + 120ms), transform 500ms var(--ease-out), filter 300ms ease;
+    filter: grayscale(.25) contrast(1.05);
   }
-  .card img { transition-delay: calc(var(--d, 0ms) + 120ms), 0ms, 0ms; }
-  .card.in img { clip-path: inset(0 0 0 0); }
-  .card .img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,8,7,.85), transparent 45%); }
-  .card .no { position: absolute; top: 14px; left: 16px; z-index: 2; font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; color: var(--gold); }
-  .card .view {
-    position: absolute; left: 50%; bottom: 18px; z-index: 2; transform: translate(-50%, 12px); opacity: 0;
-    font-family: "Cinzel", serif; font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
-    padding: 10px 18px; background: var(--blood); white-space: nowrap; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+  .item.in img { clip-path: inset(0 0 0 0); }
+  .item .no { position: absolute; top: 12px; left: 14px; z-index: 2; font-size: 10px; letter-spacing: .2em; color: var(--p-text-dim); }
+  .item .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 14px 14px 16px; border-top: 1px solid var(--p-charcoal); }
+  .item h3 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 18px; letter-spacing: .05em; text-transform: uppercase; line-height: 1.1; }
+  .item:first-child h3 { font-size: clamp(22px, 2.4vw, 32px); }
+  .item small { display: block; color: var(--p-text-dim); font-size: 11px; letter-spacing: .06em; margin-top: 4px; }
+  .item .price { font-size: 13px; color: var(--p-text); white-space: nowrap; }
+  .item .go {
+    position: absolute; right: 12px; bottom: 12px; z-index: 2; font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    padding: 9px 12px; background: var(--p-black); border: 1px solid var(--p-charcoal); color: var(--p-text);
+    transition: border-color 200ms ease, color 200ms ease;
   }
-  .card:focus-visible .view { opacity: 1; transform: translate(-50%, 0); }
   @media (hover: hover) and (pointer: fine) {
-    .card:hover { border-color: rgba(193,18,28,.7); transform: translateY(-4px); }
-    .card:hover img { transform: scale(1.05); filter: saturate(1) contrast(1.1); }
-    .card:hover .view { opacity: 1; transform: translate(-50%, 0); }
+    .item:hover { border-color: var(--p-washed); transform: translateY(-3px); }
+    .item:hover img { transform: scale(1.04); filter: none; }
+    .item:hover .go { border-color: var(--p-neon); color: var(--p-neon); }
   }
-  @media (hover: none) { .card .view { opacity: 1; transform: translate(-50%, 0); } }
-  .card .meta { padding: 18px 18px 22px; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-  .card h3 { font-family: "Cinzel", serif; font-weight: 700; font-size: 16px; letter-spacing: .08em; text-transform: uppercase; }
-  .card .sub { display: block; font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 16px; color: var(--bone-dim); margin-top: 2px; }
-  .card .price { font-family: "Cinzel", serif; color: var(--gold); font-size: 15px; white-space: nowrap; }
-  .more { text-align: center; margin-top: 56px; }
 
-  /* ---------- manifesto ---------- */
-  .manifesto {
-    background:
-      linear-gradient(rgba(10,8,7,.86), rgba(10,8,7,.94)),
-      url("https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_70,blur_3/bg.jpg") center/cover fixed;
-    text-align: center;
-  }
-  .manifesto blockquote { max-width: 900px; margin: 0 auto; font-size: clamp(28px, 3.6vw, 48px); line-height: 1.25; font-style: italic; }
-  .manifesto blockquote em { color: var(--blood-hi); font-style: normal; font-family: "UnifrakturCook", serif; }
-  .manifesto .sig { margin-top: 32px; }
+  /* Final call + quiet exploration row */
+  .final { text-align: left; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--p-charcoal); padding-top: clamp(48px, 7vw, 90px); margin-top: clamp(72px, 10vw, 140px); }
+  .final h2 { font-family: "Anton", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(3rem, 10vw, 9rem); line-height: .86; margin: 14px 0 26px; }
+  .final h2 span { color: transparent; -webkit-text-stroke: 1px var(--p-text-ghost); }
+  .final p { color: var(--p-text-dim); max-width: 46ch; margin-bottom: 30px; }
+  .explore { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 26px; margin-top: 44px; padding-top: 22px; border-top: 1px dashed var(--p-charcoal); }
+  .explore .label { margin-right: 6px; }
 
-  /* ---------- rites (why) ---------- */
-  .rites { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; background: rgba(184,149,90,.18); border: 1px solid rgba(184,149,90,.18); }
-  .rite { background: var(--void); padding: 44px 30px; text-align: center; }
-  .rite .sym { font-size: 34px; color: var(--blood-hi); line-height: 1; margin-bottom: 18px; }
-  .rite h4 { font-family: "Cinzel", serif; font-size: 15px; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 10px; }
-  .rite p { color: var(--bone-dim); font-size: 18px; }
+  footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; padding: 28px var(--gutter); border-top: 1px solid var(--p-charcoal); color: var(--p-text-ghost); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
 
-  /* ---------- final call ---------- */
-  .summon { text-align: center; background: radial-gradient(ellipse at center, rgba(139,13,20,.35), transparent 70%); }
-  .summon h2 { font-family: "UnifrakturCook", serif; font-size: clamp(52px, 8vw, 110px); line-height: 1; margin: 16px 0 22px; }
-  .summon p { color: var(--bone-dim); font-size: 22px; font-style: italic; margin-bottom: 38px; }
-
-  footer { position: relative; z-index: 2; border-top: 1px solid rgba(184,149,90,.18); padding: 40px clamp(16px, 5vw, 80px); display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; color: var(--bone-dim); font-size: 15px; }
-  footer .logo { font-size: 24px; color: var(--bone); }
-
-  /* reveal on scroll */
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+  /* Entrance reveals */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 800ms var(--ease-enter) var(--d, 0ms), transform 800ms var(--ease-enter) var(--d, 0ms); }
   .reveal.in { opacity: 1; transform: none; }
-  .card.reveal { transition: opacity 700ms var(--ease-out) var(--d, 0ms), transform 700ms var(--ease-out) var(--d, 0ms), border-color 250ms ease; }
-  .card.reveal.settled { transition: opacity 250ms ease, transform 250ms var(--ease-out), border-color 250ms ease; }
+  .item.reveal { transition: opacity 800ms var(--ease-enter) var(--d, 0ms), transform 800ms var(--ease-enter) var(--d, 0ms), border-color 250ms ease; }
+  .item.reveal.settled { transition: opacity 250ms ease, transform 250ms var(--ease-out), border-color 250ms ease; }
 
-  /* Reduced motion: keep gentle fades, remove all movement */
+  /* Reduced motion: opacity only */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    body::after, .hero h1 .drip, .marquee .track { animation: none; }
-    .reveal, .reveal.in, .card, .card:hover { transform: none !important; }
+    .strip .track { animation: none; }
+    .reveal, .reveal.in, .item, .item:hover, .cta, .cta:hover { transform: none !important; }
     .reveal { transition: opacity 400ms ease; }
-    .card img, .card.in img, .hero-art .frame { clip-path: none; }
-    .hero-art img { transform: none; filter: none; transition: opacity 600ms ease; }
-    .card:hover img { transform: none; }
-    .candle { display: none; }
-    .manifesto { background-attachment: scroll; }
+    .item img, .hero-shot .card { clip-path: none; }
+    .item:hover img { transform: none; }
+    .hero-shot img { transform: none; filter: none; transition: opacity 600ms ease; }
   }
 </style>
 </head>
 <body>
-<div class="candle" aria-hidden="true"></div>
 
-<div class="omen">Hand-drawn gothic apparel · Printed to order · Ships worldwide</div>
-
-<nav>
-  <a class="logo" href="https://cazzzua.wixstudio.com/my-site-2" target="_top">Pestil<span>l</span>ence</a>
-  <ul>
-    <li><a href="#reliquary">The Reliquary</a></li>
-    <li><a href="#creed">The Creed</a></li>
-    <li><a href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">Shop all</a></li>
-  </ul>
-</nav>
-
-<header class="hero">
-  <div>
-    <div class="eyebrow reveal" style="transition-delay:0ms">Gothic · Occult · Macabre</div>
-    <h1 class="reveal" style="transition-delay:60ms">Wear the<br><span class="drip">Omen.</span></h1>
-    <p class="tag reveal" style="transition-delay:120ms">Reapers, horned saints and weeping skulls — raw, hand-drawn art for those who never dressed for the light.</p>
-    <div class="ctas reveal" style="transition-delay:180ms">
-      <a class="btn" href="#reliquary">Enter the Reliquary ✝</a>
-      <a class="btn ghost" href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">Shop all tees</a>
-    </div>
-  </div>
-  <div class="hero-art reveal" aria-hidden="true">
-    <div class="frame" id="heroFrame">
-      <img class="on" src="https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg/v1/fill/w_920,h_1150,al_c,q_85/last-rites.jpg" alt="">
-      <img src="https://static.wixstatic.com/media/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg/v1/fill/w_920,h_1150,al_c,q_85/horned-madonna.jpg" alt="">
-      <img src="https://static.wixstatic.com/media/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg/v1/fill/w_920,h_1150,al_c,q_85/sainted-scream.jpg" alt="">
-    </div>
-    <div class="caption"><span id="heroCaption">Nº I — Last Rites</span></div>
-  </div>
-</header>
-
-<div class="marquee" aria-hidden="true">
+<div class="strip" aria-label="Shipping information">
   <div class="track">
-    <span>Last Rites<b>✝</b></span><span>Horned Madonna<b>✝</b></span><span>Crimson Halo<b>✝</b></span><span>Pale Moon<b>✝</b></span><span>Sainted Scream<b>✝</b></span><span>Mouth of Blood<b>✝</b></span><span>Open Ribs<b>✝</b></span><span>The Ring<b>✝</b></span>
-    <span>Last Rites<b>✝</b></span><span>Horned Madonna<b>✝</b></span><span>Crimson Halo<b>✝</b></span><span>Pale Moon<b>✝</b></span><span>Sainted Scream<b>✝</b></span><span>Mouth of Blood<b>✝</b></span><span>Open Ribs<b>✝</b></span><span>The Ring<b>✝</b></span>
+    <span>Free worldwide shipping</span><span>Unisex S to 5XL</span><span>Dispatched in 2 to 5 business days</span><span>DTG printed on heavyweight black cotton</span>
+    <span>Free worldwide shipping</span><span>Unisex S to 5XL</span><span>Dispatched in 2 to 5 business days</span><span>DTG printed on heavyweight black cotton</span>
   </div>
 </div>
 
-<section id="reliquary">
-  <div class="head reveal">
-    <div class="eyebrow">The collection</div>
-    <h2>The Reliquary</h2>
-    <p>Twelve relics. Each one drawn by hand, edges left exactly where they landed.</p>
-    <div class="divider">✝</div>
-  </div>
-  <div class="grid" id="grid"></div>
-  <div class="more reveal"><a class="btn ghost" href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">See the full collection</a></div>
-</section>
+<header class="top">
+  <a class="logo" data-link="home" target="_top">Pestillence</a>
+  <a class="link" data-link="all" target="_top">Full store →</a>
+</header>
 
-<section class="manifesto" id="creed">
-  <div class="eyebrow reveal">The Creed</div>
-  <blockquote class="reveal" style="margin-top:24px">
-    “Not everything worth wearing was drawn neatly. We make shirts for the ones who find <em>beauty</em> in the ruin — the funeral, the relic, the saint with blood on the halo.”
-  </blockquote>
-  <div class="sig eyebrow reveal">— Pestillence</div>
-</section>
-
-<section>
-  <div class="head reveal">
-    <div class="eyebrow">Why Pestillence</div>
-    <h2>The Rites</h2>
+<main>
+  <div class="hero">
+    <div class="grid-lines" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="label reveal" style="--d:0ms">Drop 001 / Gothic tees</div>
+        <h1 class="reveal" style="--d:60ms">Wear the<br><span class="ghost">omen</span></h1>
+        <p class="lede reveal" style="--d:120ms">Reapers, horned saints and weeping skulls. Raw, hand-drawn art printed on heavyweight black cotton. $35.90 each, shipped free anywhere.</p>
+        <div class="actions reveal" style="--d:180ms">
+          <a class="cta" href="#drop">Shop the drop</a>
+          <a class="link" data-link="all" target="_top">View the full collection →</a>
+        </div>
+      </div>
+      <div class="hero-shot" aria-hidden="true">
+        <div class="card" id="heroCard"></div>
+        <div class="tag"><span>Nº 01</span><b id="heroName">Last Rites</b></div>
+      </div>
+    </div>
   </div>
-  <div class="rites reveal">
-    <div class="rite"><div class="sym">☠</div><h4>Hand-drawn art</h4><p>Raw, painted originals — not clip-art skulls off a stock site.</p></div>
-    <div class="rite"><div class="sym">✝</div><h4>Printed to order</h4><p>Each tee is made when you order it. No overstock, no waste.</p></div>
-    <div class="rite"><div class="sym">⛧</div><h4>Ships worldwide</h4><p>To the USA, UK, Canada, Europe and beyond.</p></div>
-    <div class="rite"><div class="sym">🕯</div><h4>Secure checkout</h4><p>Pay safely through our official store.</p></div>
-  </div>
-</section>
 
-<section class="summon">
-  <div class="eyebrow reveal">The night is calling</div>
-  <h2 class="reveal">Choose your relic.</h2>
-  <p class="reveal">Twelve designs. One will feel like it was drawn for you.</p>
-  <a class="btn reveal" href="https://cazzzua.wixstudio.com/my-site-2/shop" target="_top">Shop Pestillence ✝</a>
-</section>
+  <div class="facts">
+    <div class="fact reveal" style="--d:0ms"><b>Free shipping</b><span>Worldwide, no minimum</span></div>
+    <div class="fact reveal" style="--d:50ms"><b>S to 5XL</b><span>Unisex fit</span></div>
+    <div class="fact reveal" style="--d:100ms"><b>2 to 5 days</b><span>Business days to dispatch</span></div>
+    <div class="fact reveal" style="--d:150ms"><b>DTG print</b><span>Printed into the fibre</span></div>
+  </div>
+
+  <section id="drop">
+    <div class="sec-head">
+      <div class="reveal">
+        <div class="label">The reliquary</div>
+        <h2>Twelve relics</h2>
+      </div>
+      <p class="reveal" style="--d:60ms">Pick one, choose your size on the next page, and add it to your cart. Checkout is the same secure Wix checkout as the rest of the store.</p>
+    </div>
+    <div class="drop" id="drop-grid"></div>
+
+    <div class="final">
+      <div class="label reveal">Last call</div>
+      <h2 class="reveal" style="--d:60ms">Choose<br><span>your relic</span></h2>
+      <p class="reveal" style="--d:120ms">Every tee ships free, in sizes S to 5XL.</p>
+      <a class="cta reveal" style="--d:180ms" href="#drop">Shop now</a>
+
+      <div class="explore reveal">
+        <span class="label">Want to see more?</span>
+        <a class="link" data-link="all" target="_top">Explore all 31 pieces →</a>
+        <a class="link" data-link="hoodies" target="_top">Hoodies</a>
+        <a class="link" data-link="tees" target="_top">All T-shirts</a>
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <a class="logo" href="https://cazzzua.wixstudio.com/my-site-2" target="_top">Pestillence</a>
-  <span>© <span id="yr"></span> Pestillence · Gothic apparel for the unholy few</span>
+  <span>© <span id="yr"></span> Pestillence</span>
+  <span>Gothic apparel for the unholy few</span>
 </footer>
 
 <script>
-  // Live catalog (from the Wix store, Oct 2026). Edit here when products change.
-  const STORE = "https://cazzzua.wixstudio.com/my-site-2/product-page/";
-  const IMG = id => `https://static.wixstatic.com/media/940240_${id}~mv2.jpg/v1/fill/w_640,h_800,al_c,q_85/tee.jpg`;
+  // Store links: edit here if a page address changes.
+  const SITE = "https://cazzzua.wixstudio.com/my-site-2";
+  const LINKS = {
+    home: SITE,
+    all: SITE + "/category/all-products",
+    tees: SITE + "/category/t-shirts",
+    hoodies: SITE + "/category/hoodies",
+  };
+  document.querySelectorAll("[data-link]").forEach(a => { a.href = LINKS[a.dataset.link]; });
+
+  // Live products from the Wix store (Oct 2026)
+  const PRODUCT = slug => `${SITE}/product-page/${slug}`;
+  const IMG = (id, w = 700) => `https://static.wixstatic.com/media/940240_${id}~mv2.jpg/v1/fill/w_${w},h_${Math.round(w * 1.25)},al_c,q_85/tee.jpg`;
   const products = [
-    ["Last Rites", "Hooded Reaper", "last-rites-hooded-reaper-tee", "aa888750d9aa409eb18fed5eed304de1"],
+    ["Last Rites", "Hooded reaper", "last-rites-hooded-reaper-tee", "aa888750d9aa409eb18fed5eed304de1"],
     ["Horned Madonna", "Pentagram", "horned-madonna-pentagram-tee", "72b7a03c32444ef18b9aebfc0cbad304"],
-    ["Crimson Halo", "Grim Reaper", "crimson-halo-reaper-tee", "932e62d478d5469f8dbf461e81d9b7c1"],
-    ["Sainted Scream", "Horror Martyr", "sainted-scream-martyr-tee", "2057e837b4584c12a2ba7d3b6f1be052"],
-    ["Pale Moon", "Weeping Skull", "pale-moon-weeping-skull-tee", "ff85ead2735241f4bb86115c0d47f3d9"],
-    ["Horned Siren", "Satanic Pentacle", "horned-siren-pentacle-tee", "cfb69ccf411b495793d5e86f05dde5da"],
-    ["Red Eyes", "Veiled Skull", "red-eyes-veiled-skull-tee", "d416905c971341f9a4dac4e94164197f"],
-    ["Mouth of Blood", "Horror Skull", "mouth-of-blood-hooded-skull-tee", "c4c0462497804df68e2a88d6f41a7395"],
-    ["Open Ribs", "Skeleton Saint", "open-ribs-skeletal-saint-tee", "8f037de8eeb24ac59ac085f83a7b3b85"],
-    ["Bone Halo", "Gothic Skull", "bone-halo-weeping-saint-tee", "3a102c45b2be4d61b8e438f1f0d7da43"],
-    ["The Ring", "Faceless Occult", "the-ring-faceless-tee", "cb2d524cf9f5401cbd568aeb0eb3bb2e"],
-    ["Framed", "Occult Sigil", "framed-occult-sigil-tee", "ccd06c8e56c24927881ebe37dd0383cc"],
+    ["Crimson Halo", "Grim reaper", "crimson-halo-reaper-tee", "932e62d478d5469f8dbf461e81d9b7c1"],
+    ["Sainted Scream", "Horror martyr", "sainted-scream-martyr-tee", "2057e837b4584c12a2ba7d3b6f1be052"],
+    ["Pale Moon", "Weeping skull", "pale-moon-weeping-skull-tee", "ff85ead2735241f4bb86115c0d47f3d9"],
+    ["Horned Siren", "Satanic pentacle", "horned-siren-pentacle-tee", "cfb69ccf411b495793d5e86f05dde5da"],
+    ["Red Eyes", "Veiled skull", "red-eyes-veiled-skull-tee", "d416905c971341f9a4dac4e94164197f"],
+    ["Mouth of Blood", "Horror skull", "mouth-of-blood-hooded-skull-tee", "c4c0462497804df68e2a88d6f41a7395"],
+    ["Open Ribs", "Skeleton saint", "open-ribs-skeletal-saint-tee", "8f037de8eeb24ac59ac085f83a7b3b85"],
+    ["Bone Halo", "Gothic skull", "bone-halo-weeping-saint-tee", "3a102c45b2be4d61b8e438f1f0d7da43"],
+    ["The Ring", "Faceless occult", "the-ring-faceless-tee", "cb2d524cf9f5401cbd568aeb0eb3bb2e"],
+    ["Framed", "Occult sigil", "framed-occult-sigil-tee", "ccd06c8e56c24927881ebe37dd0383cc"],
   ];
-  const roman = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
-  document.getElementById("grid").innerHTML = products.map(([name, sub, slug, img], i) => `
-    <a class="card reveal" href="${STORE + slug}" target="_top" style="--d:${(i % 4) * 50}ms">
+  const pad = n => String(n).padStart(2, "0");
+
+  document.getElementById("drop-grid").innerHTML = products.map(([name, sub, slug, img], i) => `
+    <a class="item reveal" href="${PRODUCT(slug)}" target="_top" style="--d:${(i % 4) * 50}ms">
       <div class="img">
-        <span class="no">Nº ${roman[i]}</span>
-        <img src="${IMG(img)}" alt="${name} — ${sub} gothic t-shirt" loading="lazy">
-        <span class="view">View relic →</span>
+        <span class="no">Nº ${pad(i + 1)}</span>
+        <img src="${IMG(img, i === 0 ? 1100 : 640)}" alt="${name} ${sub.toLowerCase()} gothic t-shirt by Pestillence" loading="${i < 4 ? "eager" : "lazy"}">
+        <span class="go">View &amp; buy</span>
       </div>
       <div class="meta">
-        <h3>${name}<span class="sub">${sub} tee</span></h3>
+        <h3>${name}<small>${sub} tee</small></h3>
         <span class="price">$35.90</span>
       </div>
     </a>`).join("");
 
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Hero crossfade between three relics (blur masks the overlap; pauses in hidden tabs)
-  const frames = document.querySelectorAll("#heroFrame img");
-  const cap = document.getElementById("heroCaption");
-  const caps = ["Nº I — Last Rites", "Nº II — Horned Madonna", "Nº IV — Sainted Scream"];
+  // Hero: three relics crossfade (blur masks the overlap, pauses in hidden tabs)
+  const heroPicks = [0, 1, 3];
+  const card = document.getElementById("heroCard");
+  card.innerHTML = heroPicks.map((p, k) => `<img class="${k ? "" : "on"}" src="${IMG(products[p][3], 900)}" alt="">`).join("");
+  const frames = card.querySelectorAll("img");
+  const nameEl = document.getElementById("heroName");
+  const numEl = nameEl.previousElementSibling;
   let cur = 0;
   setInterval(() => {
     if (document.hidden) return;
     frames[cur].classList.remove("on");
     cur = (cur + 1) % frames.length;
     frames[cur].classList.add("on");
-    cap.classList.add("swap");
-    setTimeout(() => { cap.textContent = caps[cur]; cap.classList.remove("swap"); }, 300);
+    nameEl.classList.add("swap");
+    setTimeout(() => {
+      nameEl.textContent = products[heroPicks[cur]][0];
+      numEl.textContent = "Nº " + pad(heroPicks[cur] + 1);
+      nameEl.classList.remove("swap");
+    }, 250);
   }, 5000);
 
-  // Candlelight trails the cursor with eased momentum — fine pointers only
-  const candle = document.querySelector(".candle");
-  if (!reduce && matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    let tx = innerWidth / 2, ty = innerHeight / 3, x = tx, y = ty, running = false;
-    const tick = () => {
-      x += (tx - x) * 0.12; y += (ty - y) * 0.12;
-      candle.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      running = Math.abs(tx - x) + Math.abs(ty - y) > 0.5;
-      if (running) requestAnimationFrame(tick);
-    };
-    addEventListener("pointermove", e => {
-      tx = e.clientX; ty = e.clientY;
-      candle.classList.add("lit");
-      if (!running) { running = true; requestAnimationFrame(tick); }
-    }, { passive: true });
-    document.addEventListener("pointerleave", () => candle.classList.remove("lit"));
-  }
-
-  // Reveal on scroll
-  const io = new IntersectionObserver(es => es.forEach(e => {
+  // Reveal on scroll; after a card settles, drop its stagger so hover responds instantly
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     const el = e.target;
-    el.classList.add("in"); io.unobserve(el);
-    // Once revealed, drop the stagger so hover/press respond instantly
-    if (el.classList.contains("card")) setTimeout(() => { el.classList.add("settled"); el.style.setProperty("--d", "0ms"); }, 1100);
+    el.classList.add("in");
+    io.unobserve(el);
+    if (el.classList.contains("item")) setTimeout(() => { el.classList.add("settled"); el.style.setProperty("--d", "0ms"); }, 1100);
   }), { threshold: .12, rootMargin: "0px 0px -60px 0px" });
-  document.querySelectorAll(".reveal, .hero-art").forEach(el => io.observe(el));
+  document.querySelectorAll(".reveal, .hero-shot").forEach(el => io.observe(el));
 
   document.getElementById("yr").textContent = new Date().getFullYear();
 </script>

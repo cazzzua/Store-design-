@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landing Page Store Guide</title>
+<meta name="description" content="How the Pestillence landing page connects to the Wix store, how to set up its buttons, and how a customer goes from ad to checkout.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600&family=Space+Mono:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --p-black: #0a0a0a;
+    --p-near-black: #101014;
+    --p-charcoal: #1a1a1f;
+    --p-washed: #232328;
+    --p-neon: #0080FF;
+    --p-neon-dim: #0080FF66;
+    --p-neon-ghost: #0080FF14;
+    --p-text: #e8e8ea;
+    --p-text-dim: #8a8a92;
+    --p-text-ghost: #4a4a52;
+    --p-error: #ff3355;
+    --ease-out: cubic-bezier(.23, 1, .32, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    background:
+      radial-gradient(80% 50% at 50% 0%, #121218 0%, transparent 70%),
+      var(--p-black);
+    color: var(--p-text);
+    font: 400 17px/1.7 "Archivo", system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: .045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  a { color: var(--p-neon); text-underline-offset: 3px; -webkit-tap-highlight-color: transparent; }
+  .mono, code, .label, nav.toc, .url { font-family: "Space Mono", ui-monospace, monospace; }
+  code, .url {
+    font-size: 13.5px; background: var(--p-near-black); border: 1px solid var(--p-charcoal);
+    padding: 2px 7px; color: var(--p-text); word-break: break-all;
+  }
+  .label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--p-text-dim); }
+  .label::before { content: "— "; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center;
+    padding: 14px clamp(16px, 4vw, 48px); background: rgba(10,10,10,.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--p-charcoal);
+  }
+  .logo { font-family: "UnifrakturMaguntia", serif; font-size: 26px; color: var(--p-text); text-decoration: none; }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 16px; }
+  .intro { padding: clamp(56px, 10vw, 110px) 0 40px; }
+  h1 {
+    font-family: "Anton", sans-serif; font-weight: 400; text-transform: uppercase;
+    font-size: clamp(2.8rem, 9vw, 5.4rem); line-height: .9; letter-spacing: .01em; margin: 16px 0 22px;
+  }
+  h1 span { color: transparent; -webkit-text-stroke: 1px var(--p-text-ghost); }
+  .intro p { color: var(--p-text-dim); max-width: 56ch; }
+
+  nav.toc { margin: 34px 0 10px; border-top: 1px solid var(--p-charcoal); }
+  nav.toc a {
+    display: flex; gap: 18px; padding: 13px 0; min-height: 44px; border-bottom: 1px solid var(--p-charcoal);
+    color: var(--p-text-dim); text-decoration: none; font-size: 13px; letter-spacing: .04em;
+    transition: color 200ms ease;
+  }
+  nav.toc a b { color: var(--p-text-ghost); font-weight: 400; min-width: 2ch; }
+  @media (hover: hover) and (pointer: fine) { nav.toc a:hover { color: var(--p-text); } nav.toc a:hover b { color: var(--p-neon); } }
+
+  .alert {
+    margin: 38px 0 0; padding: 22px 22px 20px; background: var(--p-near-black);
+    border: 1px solid var(--p-charcoal); border-left: 2px solid var(--p-error);
+  }
+  .alert h3 { font: 700 12px/1.4 "Space Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--p-error); margin-bottom: 10px; }
+  .alert p + p { margin-top: 10px; }
+
+  section { padding: clamp(56px, 9vw, 96px) 0 0; }
+  h2 {
+    font-family: "Anton", sans-serif; font-weight: 400; text-transform: uppercase;
+    font-size: clamp(2rem, 5.5vw, 3.2rem); line-height: .95; letter-spacing: .015em; margin: 12px 0 26px;
+  }
+  h3 { font: 600 19px/1.35 "Archivo", sans-serif; margin: 38px 0 12px; }
+  h4 { font: 700 12px/1.4 "Space Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--p-text-dim); margin: 26px 0 10px; }
+  p { margin-bottom: 14px; }
+  p.dim { color: var(--p-text-dim); }
+  ul, ol { margin: 0 0 18px 0; padding-left: 0; list-style: none; }
+  li { position: relative; padding-left: 28px; margin-bottom: 9px; }
+  ul > li::before { content: ""; position: absolute; left: 6px; top: .78em; width: 7px; height: 1px; background: var(--p-text-dim); }
+  ol { counter-reset: step; }
+  ol > li { counter-increment: step; }
+  ol > li::before {
+    content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: .2em;
+    font: 700 11px/1.6 "Space Mono", monospace; color: var(--p-text-ghost);
+  }
+
+  .example {
+    margin: 18px 0 24px; border: 1px solid var(--p-charcoal); background: var(--p-near-black);
+  }
+  .example div { display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding: 12px 16px; border-bottom: 1px solid var(--p-charcoal); align-items: baseline; }
+  .example div:last-child { border-bottom: 0; }
+  .example span:first-child { font: 400 11px/1.5 "Space Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--p-text-dim); }
+  .example span:last-child { font: 400 14px/1.5 "Space Mono", monospace; word-break: break-all; }
+  @media (max-width: 520px) { .example div { grid-template-columns: 1fr; gap: 2px; } }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 15px; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 12px 12px 0; border-bottom: 1px solid var(--p-charcoal); }
+  th { font: 700 11px/1.4 "Space Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--p-text-dim); }
+  .table-wrap { overflow-x: auto; }
+
+  /* Buying journey */
+  .journey { counter-reset: j; border-left: 1px solid var(--p-charcoal); margin: 10px 0 24px 8px; }
+  .journey li { counter-increment: j; padding: 0 0 22px 30px; margin: 0; }
+  .journey li::before {
+    content: counter(j); position: absolute; left: -12px; top: 0; width: 23px; height: 23px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--p-black); border: 1px solid var(--p-washed);
+    font: 700 11px/1 "Space Mono", monospace; color: var(--p-text-dim);
+  }
+  .journey li.key::before { border-color: var(--p-neon); color: var(--p-neon); box-shadow: 0 0 18px var(--p-neon-dim); }
+  .journey b { font-weight: 600; }
+
+  .tip { border: 1px solid var(--p-charcoal); background: var(--p-neon-ghost); padding: 16px 18px; margin: 18px 0 24px; font-size: 15.5px; }
+  .tip .label { color: var(--p-neon); display: block; margin-bottom: 6px; }
+
+  footer { margin-top: 90px; padding: 26px 0 40px; border-top: 1px solid var(--p-charcoal); color: var(--p-text-ghost); font: 400 11px/1.6 "Space Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { transform: none; transition: opacity 400ms ease; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" href="https://cazzzua.wixstudio.com/my-site-2" target="_top">Pestillence</a>
+  <span class="label">Store guide</span>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <div class="label">Landing page + Wix Stores</div>
+    <h1>One site.<br><span>One checkout.</span></h1>
+    <p>This guide explains how your new landing page and your Pestillence store fit together, how to set up every button, and what happens between someone tapping your ad and paying for a tee.</p>
+
+    <nav class="toc" aria-label="Contents">
+      <a href="#connect"><b>01</b>How the landing page connects to your real store</a>
+      <a href="#buttons"><b>02</b>Step-by-step: setting up buttons and product links on the landing page</a>
+      <a href="#flow"><b>03</b>Customer buying flow (from ad to checkout)</a>
+      <a href="#explore"><b>04</b>Letting customers visit the full store from the landing page</a>
+      <a href="#tracking"><b>05</b>Optional: tracking and orders</a>
+    </nav>
+
+    <div class="alert">
+      <h3>Check these two things before you run ads</h3>
+      <p>Your site is on the Wix Free plan right now. Wix only takes payments on a paid plan that includes eCommerce, and a custom domain (like <code>pestillence.com</code>) also needs a paid plan. Until you upgrade, people can browse but can't pay.</p>
+      <p>The coded landing page (<code>index.html</code>) sits inside an HTML embed, which is a box that can't talk to the Wix cart. Its buttons open your real product pages, and shoppers buy from there. If you want an "Add to Cart" button on the landing page itself, use the Wix Stores elements described in step 2b, Option 1.</p>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section id="connect" class="reveal">
+    <div class="label">01</div>
+    <h2>How the landing page connects to your real store</h2>
+    <p>Your landing page isn't a separate website. It's one more page on the same Wix site as your store, just like your home page or your product pages. You could put it at an address like <span class="url">cazzzua.wixstudio.com/my-site-2/gothic-drop</span>, and later at <span class="url">yourdomain.com/gothic-drop</span> once you connect a domain.</p>
+    <p>Because it lives on the same site, you don't need an integration, an app or any code to "connect" it. It already has access to everything Wix Stores has: the same 31 products, the same prices, sizes and stock, the same cart, and the same checkout.</p>
+    <p>The connection is links and store elements. A "Shop now" button links to one of your collection pages. A product card links to that product's page. A Wix Stores product gallery placed on the landing page pulls products straight from your catalogue, with working Add to Cart buttons.</p>
+    <p>So a customer can start buying on the landing page: add a tee to the cart, open the cart and go to checkout. If they'd rather look around first, one link takes them into the full store, and whatever is already in their cart stays there.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="buttons" class="reveal">
+    <div class="label">02</div>
+    <h2>Step-by-step: setting up buttons and product links on the landing page</h2>
+    <p class="dim">Your store addresses follow this pattern. Wix uses <code>/category/</code> for collections and <code>/product-page/</code> for products, not <code>/shop/</code> or <code>/product/</code>.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Page</th><th>Address</th></tr>
+        <tr><td>All products (31)</td><td><span class="url">…/my-site-2/category/all-products</span></td></tr>
+        <tr><td>T-shirts (19)</td><td><span class="url">…/my-site-2/category/t-shirts</span></td></tr>
+        <tr><td>Hoodies (12)</td><td><span class="url">…/my-site-2/category/hoodies</span></td></tr>
+        <tr><td>One product</td><td><span class="url">…/my-site-2/product-page/last-rites-hooded-reaper-tee</span></td></tr>
+      </table>
+    </div>
+    <p class="dim">The product address comes straight from your store. The three collection addresses follow the usual Wix pattern built from your category names. Open each one in a browser once to make sure it loads before you use it.</p>
+
+    <h3>a) "Shop now" and "View the collection" buttons (hero and final call to action)</h3>
+    <ol>
+      <li>Open your site in Wix Studio and go to the landing page (Pages panel, then the page name).</li>
+      <li>Click the button once to select it. A blue frame and a small toolbar appear.</li>
+      <li>Click the link icon (it looks like a chain) in the toolbar. You can also find Link in the Inspector panel on the right.</li>
+      <li>Choose <b>Web address</b> and paste the collection address. Set it to open in the same tab, so the shopper stays in your store.</li>
+      <li>To link to a regular page such as your home page, choose <b>Page</b> instead and pick it from the list.</li>
+      <li>Double-click the button to edit its text. Short and direct works best: "Shop now", "Shop the drop" or "View the full collection".</li>
+      <li>Click <b>Preview</b>, then the button, and make sure the right page opens.</li>
+    </ol>
+    <div class="example">
+      <div><span>Button text</span><span>Shop now</span></div>
+      <div><span>Link</span><span>https://cazzzua.wixstudio.com/my-site-2/category/hoodies</span></div>
+      <div><span>With domain</span><span>https://yourdomain.com/category/hoodies</span></div>
+    </div>
+    <div class="tip"><span class="label">Hero tip</span>If the products are further down the same landing page, link "Shop now" to that section with an <b>Anchor</b> link. The shopper scrolls to the products and never leaves the page.</div>
+
+    <h3>b) Product buttons on the landing page ("Add to Cart", "Buy Now", "View")</h3>
+
+    <h4>Option 1: Wix Stores product elements on the page</h4>
+    <ol>
+      <li>Click <b>Add Elements (+)</b> on the left and open <b>Store</b>.</li>
+      <li>Drag a product gallery (grid or slider) onto the landing page. For one featured tee, you can add a single product widget or an <b>Add to Cart button</b> element and connect it to that product.</li>
+      <li>Pick which products appear. A gallery shows one category, so the simplest way is to create a category in your dashboard called something like "Gothic Drop", add the 6 to 12 tees you want to show, and point the gallery at it in the gallery's settings. Leave it out of your menu so it only appears here.</li>
+      <li>In the gallery's settings, turn on the Add to Cart button. Every tee comes in S to 5XL, so also turn on product options (or quick view) so shoppers pick a size before adding.</li>
+      <li>Set what happens after "Add to Cart" so the side cart (mini cart) opens. The shopper sees their item, stays on the landing page, and can tap Checkout straight away.</li>
+      <li>Change the button text if you like. "Add to Cart" is the clearest. "Buy Now" also works for a single featured product.</li>
+    </ol>
+    <p>Wix renames panels now and then, so labels in your editor may differ slightly from the ones here. The order of steps stays the same.</p>
+    <p>About checkout: there's no popup checkout. When the shopper taps Checkout in the side cart, Wix opens its own checkout page on your site, with the same address bar and the same store. It only appears after they've decided to pay.</p>
+
+    <h4>Option 2: regular buttons that link to product pages</h4>
+    <ol>
+      <li>Click <b>Add Elements (+)</b>, then <b>Button</b>, and drag one under your product image.</li>
+      <li>Click the link icon, choose <b>Web address</b>, and paste the product's address.</li>
+      <li>Use a label that says what happens next: "View", "See details" or "Buy now". The product page is where they pick a size and add to cart.</li>
+    </ol>
+    <div class="example">
+      <div><span>Button text</span><span>View &amp; buy</span></div>
+      <div><span>Link</span><span>https://cazzzua.wixstudio.com/my-site-2/product-page/last-rites-hooded-reaper-tee</span></div>
+    </div>
+
+    <h4>Which one to use</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th></th><th>Option 1: store elements</th><th>Option 2: linked buttons</th></tr>
+        <tr><td>Add to cart on the landing page</td><td>Yes</td><td>No, it happens on the product page</td></tr>
+        <tr><td>Clicks to checkout</td><td>Fewer</td><td>One extra page</td></tr>
+        <tr><td>Design freedom</td><td>Limited to Wix's gallery styles</td><td>Full, works with the coded page</td></tr>
+        <tr><td>Best for</td><td>Ad traffic you want to convert fast</td><td>Custom sections, quick setup</td></tr>
+      </table>
+    </div>
+    <p>A good mix: use the coded page (or your own Wix sections) for the hero and the brand story, then place one Wix Stores gallery for the products. You keep the look and still get a working Add to Cart.</p>
+
+    <h3>c) "See more products" and "Visit full store" buttons</h3>
+    <ol>
+      <li>Put it after the main products, near the final "Shop now". By then the shopper has seen the drop, so the link reads as a next step, not a distraction.</li>
+      <li>Make it a text link or an outlined (secondary) button, smaller than your main button.</li>
+      <li>Link it to all products, or to the collection that matches the ad. Someone who came for a hoodie ad should land on hoodies.</li>
+      <li>Write it like a person would say it: "Explore the full collection", "See more gothic pieces" or "Explore all 31 pieces".</li>
+    </ol>
+    <div class="example">
+      <div><span>Link text</span><span>Explore the full collection</span></div>
+      <div><span>Link</span><span>https://cazzzua.wixstudio.com/my-site-2/category/all-products</span></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="flow" class="reveal">
+    <div class="label">03</div>
+    <h2>Customer buying flow (from ad to checkout)</h2>
+    <p>Say Maya in Manchester is scrolling Instagram late at night.</p>
+    <ol class="journey">
+      <li>She sees your <b>Last Rites</b> reaper tee in a Reel and taps "Shop now".</li>
+      <li>She lands on your landing page at <span class="url">yourdomain.com/gothic-drop</span>. It's black, the tee from the ad is right at the top, and the strip says shipping is free.</li>
+      <li>She scrolls past the benefits (free worldwide shipping, sizes S to 5XL) into the product grid and sees eleven more designs.</li>
+      <li class="key">She picks size M on Last Rites and taps <b>Add to Cart</b>. With a linked button, she taps <b>View &amp; buy</b> and does the same thing on the product page.</li>
+      <li class="key">The side cart slides open with her tee in it. She taps <b>Checkout</b>.</li>
+      <li class="key">She pays on your normal Wix checkout with whichever methods you've switched on, such as card or PayPal.</li>
+      <li>At any point she could have tapped "Explore the full collection" to look at hoodies first. Her cart would still be waiting at checkout.</li>
+    </ol>
+  </section>
+
+  <!-- 4 -->
+  <section id="explore" class="reveal">
+    <div class="label">04</div>
+    <h2>Letting customers visit the full store from the landing page</h2>
+    <h4>Where to put it</h4>
+    <ul>
+      <li>One quiet link in the header, top right, such as "Full store →". People who want to browse will look there.</li>
+      <li>One small row under the final "Shop now", for example: "Want to see more? Explore all 31 pieces · Hoodies · All T-shirts".</li>
+      <li>Leave it out of the hero. The first screen has one job: getting people to the products.</li>
+    </ul>
+
+    <h4>What to call it</h4>
+    <ul>
+      <li>"Explore the full collection" or "See more gothic pieces". These sound like an invitation.</li>
+      <li>Avoid "Leave", "Home" or "Back to store". They make the landing page feel like a detour.</li>
+    </ul>
+
+    <h4>Header or footer?</h4>
+    <p>Keep a minimal header on this page: your logo plus one "Full store" link. Hide the full site menu on this page if you can (in Wix Studio you can hide the header elements on a single page, or give the page its own simple header). A footer link is fine too, but by the time someone reaches your footer, the final call to action has already done the work.</p>
+
+    <h4>How to keep exits under control</h4>
+    <ul>
+      <li>One main action, repeated: "Shop now" in the hero, product buttons in the middle, and "Shop now" again at the end. All of them lead into buying.</li>
+      <li>Two or three ways out at most: the header link and the "see more" row. No social icons, blog links or About page links here.</li>
+      <li>Make exits look quieter than buying. Your main button gets the blue outline. Exit links stay grey and small.</li>
+      <li>Match the ad. A hoodie ad should point the "see more" link to hoodies, not to everything.</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="tracking" class="reveal">
+    <div class="label">05</div>
+    <h2>Optional: tracking and orders</h2>
+    <ul>
+      <li>Every sale shows up in your Wix dashboard under <b>Orders</b>, whether the customer started on the landing page, a product page or the home page. Printful or Printify get it the same way they do now.</li>
+      <li>Add UTM tags to your ad links so you can see which ad brought people in. For example: <span class="url">yourdomain.com/gothic-drop?utm_source=instagram&amp;utm_campaign=gothic_drop</span>. Use <code>utm_source=tiktok</code> for TikTok ads. Wix Analytics groups visits by these tags.</li>
+      <li>You don't need separate systems. The landing page and the store are one Wix site with one cart, one checkout and one list of orders.</li>
+    </ul>
+  </section>
+
+  <footer>Pestillence · Store guide · Same site, same checkout</footer>
+</div>
+
+<script>
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: .05 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
