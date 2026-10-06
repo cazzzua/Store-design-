@@ -40,7 +40,7 @@ rank, rebuild the sections with native Wix Studio elements using the tokens belo
 | `--p-text-ghost` | `#4a4a52` | Outlined display words |
 
 Fonts (Google Fonts): **Anton** for headlines, **Space Mono** for body text and labels,
-**UnifrakturMaguntia** for the logo only. The guide uses **Archivo** for long body text.
+**UnifrakturCook** (bold) for the logo only. The guide uses **Archivo** for long body text.
 
 ## Updating products
 Edit the `relics` array at the bottom of `index.html`: name, type, product slug, Wix image ID and the two lines of text.
