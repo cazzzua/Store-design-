@@ -195,10 +195,10 @@
 </head>
 <body>
 
-<div class="strip" aria-label="Shipping information">
+<div class="strip">
   <div class="track">
     <span>Free worldwide shipping</span><span>Unisex S to 5XL</span><span>Dispatched in 2 to 5 business days</span><span>Heavyweight black cotton</span>
-    <span>Free worldwide shipping</span><span>Unisex S to 5XL</span><span>Dispatched in 2 to 5 business days</span><span>Heavyweight black cotton</span>
+    <span aria-hidden="true">Free worldwide shipping</span><span aria-hidden="true">Unisex S to 5XL</span><span aria-hidden="true">Dispatched in 2 to 5 business days</span><span aria-hidden="true">Heavyweight black cotton</span>
   </div>
 </div>
 
@@ -303,7 +303,7 @@
 </div>
 
 <footer>
-  <span>© <span id="yr"></span> Pestillence</span>
+  <span>© <span id="yr">2026</span> Pestillence</span>
   <span>Gothic apparel for the unholy few</span>
 </footer>
 
@@ -314,10 +314,11 @@
     const btn = document.getElementById("buy-" + k);
     const note = document.getElementById("note-" + k);
     const shown = set.querySelector("legend b");
+    const price = btn.textContent.split("·").pop().trim(); // read from the button, so a price edit in the HTML is enough
     set.addEventListener("change", e => {
       const size = e.target.value;
       shown.textContent = size;
-      btn.textContent = `Buy size ${size} · $35.90`;
+      btn.textContent = `Buy size ${size} · ${price}`;
       note.textContent = `Tap ${size} again on the next screen, then Add to Cart.`;
     });
   });

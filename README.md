@@ -13,8 +13,8 @@ both in the PESTILLENCE design system (black + one electric blue accent).
 - `index.html` runs inside an HTML embed, which can't add items to the Wix cart. Its buttons open the
   real product pages. For "Add to Cart" directly on the landing page, use Wix Stores elements
   (see `guide.html`, section 2b, Option 1).
-- Collection links use `/category/all-products`, `/category/t-shirts` and `/category/hoodies`.
-  Open each once to confirm. They're set in one place: the `LINKS` object at the bottom of `index.html`.
+- `index.html` links to `/category/all-products` (header and "Explore the full collection") and to the
+  three `/product-page/...` addresses. They're plain `href`s in the HTML; search for `my-site-2` to find them all.
 
 ## Add the landing page to Wix Studio
 1. Add a page, for example `/gothic-drop`.
@@ -43,4 +43,6 @@ Fonts (Google Fonts): **Anton** for headlines, **Space Mono** for body text and 
 **UnifrakturCook** (bold) for the logo only. The guide uses **Archivo** for long body text.
 
 ## Updating products
-Edit the `relics` array at the bottom of `index.html`: name, type, product slug, Wix image ID and the two lines of text.
+Each tee is one `<article class="relic">` block in `index.html`. To swap a product, edit its block: name, type,
+the product-page link (used twice: photo and Buy button), the Wix image URL (also used in the hero thumbnail),
+the two lines of text, and the price on the Buy button and price line. The size picker reads the price from the button.
