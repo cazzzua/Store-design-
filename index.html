@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PESTILLENCE — Drop 001</title>
 <meta name="description" content="Three gothic tees from PESTILLENCE: Last Rites, Horned Madonna and Sainted Scream. Heavyweight black cotton, unisex S to 5XL, free worldwide shipping.">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
@@ -121,10 +122,9 @@
   .relic:first-child .shot { border-color: var(--p-neon-dim); box-shadow: 0 0 40px var(--p-neon-dim); } /* the one glow */
   .shot img {
     width: 100%; height: 100%; object-fit: contain;
-    clip-path: inset(0 0 100% 0);
     transition: clip-path 1000ms var(--ease-in-out) 120ms, transform 500ms var(--ease-out);
   }
-  .relic.in .shot img { clip-path: inset(0 0 0 0); }
+  .js .relic:not(.in) .shot img { clip-path: inset(0 0 100% 0); }
   .shot .sides {
     position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: space-around; pointer-events: none;
     font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--p-text-ghost);
@@ -169,15 +169,15 @@
 
   footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; padding: 26px var(--gutter); border-top: 1px solid var(--p-charcoal); color: var(--p-text-ghost); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
 
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 800ms var(--ease-enter) var(--d, 0ms), transform 800ms var(--ease-enter) var(--d, 0ms); }
-  .reveal.in { opacity: 1; transform: none; }
+  .reveal { transition: opacity 800ms var(--ease-enter) var(--d, 0ms), transform 800ms var(--ease-enter) var(--d, 0ms); }
+  .js .reveal:not(.in) { opacity: 0; transform: translateY(20px); }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .strip .track { animation: none; }
-    .reveal, .reveal.in, .cta, .cta:hover, .shot:hover img { transform: none !important; }
+    .reveal, .js .reveal:not(.in), .cta, .cta:hover, .shot:hover img { transform: none !important; }
     .reveal { transition: opacity 400ms ease; }
-    .shot img { clip-path: none; }
+    .js .relic:not(.in) .shot img { clip-path: none; }
   }
 </style>
 </head>
@@ -191,8 +191,8 @@
 </div>
 
 <header class="top">
-  <a class="logo" data-link="home" target="_top">Pestillence</a>
-  <a class="link" data-link="all" target="_top">Full store →</a>
+  <a class="logo" href="https://cazzzua.wixstudio.com/my-site-2" target="_top">Pestillence</a>
+  <a class="link" href="https://cazzzua.wixstudio.com/my-site-2/category/all-products" target="_top">Full store →</a>
 </header>
 
 <div class="hero">
@@ -203,13 +203,74 @@
     </div>
     <div class="reveal" style="--d:120ms">
       <p>A reaper, a horned madonna and a screaming saint. Hand-drawn, printed on heavyweight black cotton, $35.90 each with free shipping.</p>
-      <div class="thumbs" id="thumbs"></div>
+      <div class="thumbs"><a href="#relic-1" aria-label="Last Rites"><img src="https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg" alt="" loading="eager"></a><a href="#relic-2" aria-label="Horned Madonna"><img src="https://static.wixstatic.com/media/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg" alt="" loading="eager"></a><a href="#relic-3" aria-label="Sainted Scream"><img src="https://static.wixstatic.com/media/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg" alt="" loading="eager"></a></div>
       <a class="cta" href="#relic-1">Choose yours ↓</a>
     </div>
   </div>
 </div>
 
-<main class="relics" id="relics"></main>
+<main class="relics">
+  <article class="relic" id="relic-1">
+    <a class="shot" href="https://cazzzua.wixstudio.com/my-site-2/product-page/last-rites-hooded-reaper-tee" target="_top" aria-label="Last Rites: view product">
+      <span class="no">Nº 01</span>
+      <img src="https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg" width="2000" height="2000" alt="Last Rites hooded reaper t-shirt by Pestillence, front artwork and back print" loading="eager" decoding="async">
+      <span class="sides" aria-hidden="true"><span>Front</span><span>Back</span></span>
+    </a>
+    <div class="info">
+      <div class="label reveal">Relic 01 of 03</div>
+      <h2 class="reveal" style="--d:50ms">Last Rites</h2>
+      <div class="kind reveal" style="--d:80ms">Hooded reaper t-shirt</div>
+      <p class="hook reveal" style="--d:110ms">"Endings deserve ceremony. Most of the ones you&#39;ve had didn&#39;t get any."</p>
+      <p class="desc reveal" style="--d:140ms">A hooded grim reaper with a bloodied skull under a pale halo. Printed into the cotton, so the halo doesn&#39;t yellow or lift at the edges.</p>
+      <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
+      <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span><span>5XL</span></div>
+      <div class="buy reveal" style="--d:230ms">
+        <a class="cta" href="https://cazzzua.wixstudio.com/my-site-2/product-page/last-rites-hooded-reaper-tee" target="_top">Buy now · $35.90</a>
+        <span class="note">Choose your size on the next screen, then checkout.</span>
+      </div>
+    </div>
+  </article>
+  <article class="relic" id="relic-2">
+    <a class="shot" href="https://cazzzua.wixstudio.com/my-site-2/product-page/horned-madonna-pentagram-tee" target="_top" aria-label="Horned Madonna: view product">
+      <span class="no">Nº 02</span>
+      <img src="https://static.wixstatic.com/media/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg" width="2000" height="2000" alt="Horned Madonna pentagram t-shirt by Pestillence, front artwork and back print" loading="lazy" decoding="async">
+      <span class="sides" aria-hidden="true"><span>Front</span><span>Back</span></span>
+    </a>
+    <div class="info">
+      <div class="label reveal">Relic 02 of 03</div>
+      <h2 class="reveal" style="--d:50ms">Horned Madonna</h2>
+      <div class="kind reveal" style="--d:80ms">Pentagram t-shirt</div>
+      <p class="hook reveal" style="--d:110ms">"Every mother in every painting is holding something. This one is holding a skull."</p>
+      <p class="desc reveal" style="--d:140ms">A horned woman marked with a pentagram, a skull where the sacred heart usually goes. Fine line work that stays fine wash after wash.</p>
+      <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
+      <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span><span>5XL</span></div>
+      <div class="buy reveal" style="--d:230ms">
+        <a class="cta" href="https://cazzzua.wixstudio.com/my-site-2/product-page/horned-madonna-pentagram-tee" target="_top">Buy now · $35.90</a>
+        <span class="note">Choose your size on the next screen, then checkout.</span>
+      </div>
+    </div>
+  </article>
+  <article class="relic" id="relic-3">
+    <a class="shot" href="https://cazzzua.wixstudio.com/my-site-2/product-page/sainted-scream-martyr-tee" target="_top" aria-label="Sainted Scream: view product">
+      <span class="no">Nº 03</span>
+      <img src="https://static.wixstatic.com/media/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg" width="2000" height="2000" alt="Sainted Scream horror martyr t-shirt by Pestillence, front artwork and back print" loading="lazy" decoding="async">
+      <span class="sides" aria-hidden="true"><span>Front</span><span>Back</span></span>
+    </a>
+    <div class="info">
+      <div class="label reveal">Relic 03 of 03</div>
+      <h2 class="reveal" style="--d:50ms">Sainted Scream</h2>
+      <div class="kind reveal" style="--d:80ms">Horror martyr t-shirt</div>
+      <p class="hook reveal" style="--d:110ms">"Somebody always gets made an example of. Occasionally it&#39;s worth it."</p>
+      <p class="desc reveal" style="--d:140ms">A screaming skull saint, haloed bone white on a bloodstained shroud. The open jaw sits dead centre, so it lands first.</p>
+      <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
+      <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span><span>5XL</span></div>
+      <div class="buy reveal" style="--d:230ms">
+        <a class="cta" href="https://cazzzua.wixstudio.com/my-site-2/product-page/sainted-scream-martyr-tee" target="_top">Buy now · $35.90</a>
+        <span class="note">Choose your size on the next screen, then checkout.</span>
+      </div>
+    </div>
+  </article>
+</main>
 
 <section class="how">
   <div class="label reveal">Easy checkout</div>
@@ -226,7 +287,7 @@
 
 <div class="explore reveal">
   <span class="label">Want more?</span>
-  <a class="link" data-link="all" target="_top">Explore the full collection →</a>
+  <a class="link" href="https://cazzzua.wixstudio.com/my-site-2/category/all-products" target="_top">Explore the full collection →</a>
 </div>
 
 <footer>
@@ -235,68 +296,14 @@
 </footer>
 
 <script>
-  // Store links: edit here if a page address changes.
-  const SITE = "https://cazzzua.wixstudio.com/my-site-2";
-  const LINKS = { home: SITE, all: SITE + "/category/all-products" };
-  document.querySelectorAll("[data-link]").forEach(a => { a.href = LINKS[a.dataset.link]; });
-
-  // The three tees: real photos, text and links from the Wix store (Oct 2026).
-  // Each photo shows the front artwork and the back print side by side.
-  const IMG = (id, w) => `https://static.wixstatic.com/media/940240_${id}~mv2.jpg/v1/fit/w_${w},h_${w},q_90/tee.jpg`;
-  const relics = [
-    {
-      name: "Last Rites", kind: "Hooded reaper t-shirt", slug: "last-rites-hooded-reaper-tee",
-      img: "aa888750d9aa409eb18fed5eed304de1",
-      hook: "Endings deserve ceremony. Most of the ones you've had didn't get any.",
-      desc: "A hooded grim reaper with a bloodied skull under a pale halo. Printed into the cotton, so the halo doesn't yellow or lift at the edges.",
-    },
-    {
-      name: "Horned Madonna", kind: "Pentagram t-shirt", slug: "horned-madonna-pentagram-tee",
-      img: "72b7a03c32444ef18b9aebfc0cbad304",
-      hook: "Every mother in every painting is holding something. This one is holding a skull.",
-      desc: "A horned woman marked with a pentagram, a skull where the sacred heart usually goes. Fine line work that stays fine wash after wash.",
-    },
-    {
-      name: "Sainted Scream", kind: "Horror martyr t-shirt", slug: "sainted-scream-martyr-tee",
-      img: "2057e837b4584c12a2ba7d3b6f1be052",
-      hook: "Somebody always gets made an example of. Occasionally it's worth it.",
-      desc: "A screaming skull saint, haloed bone white on a bloodstained shroud. The open jaw sits dead centre, so it lands first.",
-    },
-  ];
-  const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"];
-  const product = slug => `${SITE}/product-page/${slug}`;
-
-  document.getElementById("thumbs").innerHTML = relics.map((r, i) =>
-    `<a href="#relic-${i + 1}" aria-label="${r.name}"><img src="${IMG(r.img, 200)}" alt=""></a>`).join("");
-
-  document.getElementById("relics").innerHTML = relics.map((r, i) => `
-    <article class="relic" id="relic-${i + 1}">
-      <a class="shot" href="${product(r.slug)}" target="_top" aria-label="${r.name}: view product">
-        <span class="no">Nº 0${i + 1}</span>
-        <img src="${IMG(r.img, 1200)}" alt="${r.name} ${r.kind.toLowerCase()} by Pestillence, front artwork and back print" loading="${i ? "lazy" : "eager"}">
-        <span class="sides" aria-hidden="true"><span>Front</span><span>Back</span></span>
-      </a>
-      <div class="info">
-        <div class="label reveal">Relic 0${i + 1} of 03</div>
-        <h2 class="reveal" style="--d:50ms">${r.name}</h2>
-        <div class="kind reveal" style="--d:80ms">${r.kind}</div>
-        <p class="hook reveal" style="--d:110ms">"${r.hook}"</p>
-        <p class="desc reveal" style="--d:140ms">${r.desc}</p>
-        <div class="price reveal" style="--d:170ms">$35.90<small>Free shipping</small></div>
-        <div class="sizes reveal" style="--d:200ms" aria-label="Sizes in stock"><em>In stock</em>${SIZES.map(s => `<span>${s}</span>`).join("")}</div>
-        <div class="buy reveal" style="--d:230ms">
-          <a class="cta" href="${product(r.slug)}" target="_top">Buy now · $35.90</a>
-          <span class="note">Choose your size on the next screen, then checkout.</span>
-        </div>
-      </div>
-    </article>`).join("");
-
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add("in");
     io.unobserve(e.target);
   }), { threshold: .12, rootMargin: "0px 0px -60px 0px" });
   document.querySelectorAll(".reveal, .relic").forEach(el => io.observe(el));
+  // Safety net: if the observer never fires (some embeds), show everything
+  setTimeout(() => document.querySelectorAll(".reveal, .relic").forEach(el => el.classList.add("in")), 2500);
 
   document.getElementById("yr").textContent = new Date().getFullYear();
 </script>
