@@ -195,10 +195,10 @@
 </head>
 <body>
 
-<div class="strip" aria-label="Shipping information">
+<div class="strip">
   <div class="track">
     <span>Free worldwide shipping</span><span>Unisex S to 5XL</span><span>Dispatched in 2 to 5 business days</span><span>Heavyweight black cotton</span>
-    <span>Free worldwide shipping</span><span>Unisex S to 5XL</span><span>Dispatched in 2 to 5 business days</span><span>Heavyweight black cotton</span>
+    <span aria-hidden="true">Free worldwide shipping</span><span aria-hidden="true">Unisex S to 5XL</span><span aria-hidden="true">Dispatched in 2 to 5 business days</span><span aria-hidden="true">Heavyweight black cotton</span>
   </div>
 </div>
 
@@ -215,7 +215,7 @@
     </div>
     <div class="reveal" style="--d:120ms">
       <p>A reaper, a horned madonna and a screaming saint. Hand-drawn, printed on heavyweight black cotton, $35.90 each with free shipping.</p>
-      <div class="thumbs"><a href="#relic-1" aria-label="Last Rites"><img src="https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg" alt="" loading="eager"></a><a href="#relic-2" aria-label="Horned Madonna"><img src="https://static.wixstatic.com/media/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg" alt="" loading="eager"></a><a href="#relic-3" aria-label="Sainted Scream"><img src="https://static.wixstatic.com/media/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg" alt="" loading="eager"></a></div>
+      <div class="thumbs"><a href="#relic-1" aria-label="Last Rites"><img src="https://static.wixstatic.com/media/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg/v1/fit/w_192,h_192,q_80/940240_aa888750d9aa409eb18fed5eed304de1~mv2.jpg" width="64" height="64" alt=""></a><a href="#relic-2" aria-label="Horned Madonna"><img src="https://static.wixstatic.com/media/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg/v1/fit/w_192,h_192,q_80/940240_72b7a03c32444ef18b9aebfc0cbad304~mv2.jpg" width="64" height="64" alt=""></a><a href="#relic-3" aria-label="Sainted Scream"><img src="https://static.wixstatic.com/media/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg/v1/fit/w_192,h_192,q_80/940240_2057e837b4584c12a2ba7d3b6f1be052~mv2.jpg" width="64" height="64" alt=""></a></div>
       <a class="cta" href="#relic-1">Choose yours ↓</a>
     </div>
   </div>
@@ -303,7 +303,7 @@
 </div>
 
 <footer>
-  <span>© <span id="yr"></span> Pestillence</span>
+  <span>© <span id="yr">2026</span> Pestillence</span>
   <span>Gothic apparel for the unholy few</span>
 </footer>
 
@@ -314,12 +314,19 @@
     const btn = document.getElementById("buy-" + k);
     const note = document.getElementById("note-" + k);
     const shown = set.querySelector("legend b");
-    set.addEventListener("change", e => {
-      const size = e.target.value;
+    const price = btn.textContent.split("·")[1].trim();
+    const sync = () => {
+      const picked = set.querySelector("input:checked");
+      if (!picked) return;
+      const size = picked.value;
       shown.textContent = size;
-      btn.textContent = `Buy size ${size} · $35.90`;
+      btn.textContent = `Buy size ${size} · ${price}`;
       note.textContent = `Tap ${size} again on the next screen, then Add to Cart.`;
-    });
+    };
+    set.addEventListener("change", sync);
+    // The browser can restore a checked size when the shopper comes back from the product page
+    window.addEventListener("pageshow", sync);
+    sync();
   });
 
   const io = new IntersectionObserver(entries => entries.forEach(e => {

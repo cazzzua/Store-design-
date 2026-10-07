@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Landing Page Store Guide</title>
+<script>document.documentElement.classList.add("js")</script>
 <meta name="description" content="How the Pestillence landing page connects to the Wix store, how to set up its buttons, and how a customer goes from ad to checkout.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,11 +128,12 @@
 
   footer { margin-top: 90px; padding: 26px 0 40px; border-top: 1px solid var(--p-charcoal); color: var(--p-text-ghost); font: 400 11px/1.6 "Space Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
 
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
-  .reveal.in { opacity: 1; transform: none; }
+  .reveal { transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+  .js .reveal:not(.in) { opacity: 0; transform: translateY(16px); }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .reveal { transform: none; transition: opacity 400ms ease; }
+    .reveal, .js .reveal:not(.in) { transform: none; }
+    .reveal { transition: opacity 400ms ease; }
   }
 </style>
 </head>
@@ -320,6 +322,8 @@
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { threshold: .05 });
   document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  // Safety net: if the observer never fires, show everything
+  setTimeout(() => document.querySelectorAll(".reveal").forEach(el => el.classList.add("in")), 2500);
 </script>
 </body>
 </html>
